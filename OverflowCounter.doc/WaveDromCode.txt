@@ -1,0 +1,27 @@
+                                                          WaveDrom Code
+
+
+#input&Output
+
+{signal: [
+  
+  {name: 'CLK', wave: 'P..........', period: 2},
+  
+  {name: 's00_timestamp_tvalid', wave: '0.h.l...h.l...h...l...'},
+  
+  {name: 's00_timestamp_tdata', wave:'xx2.....2.....2.2.....', data: ['FID=1| Coarse&#8321 |Fine&#8321', 'FID=0| Coarse&#8321 |Fine&#8321', 'FID=0| Coarse&#8321 |Fine&#8321', 'FID=1| Coarse&#8322 |Fine&#8322']},
+  
+  {name: 'CoarseOverflow', wave: '2.........2.....2.....', data: ['0', '1', '2']},
+  
+  {name: 'm00_beltbus_tvalid', wave: '0...h.l...h.l...h...l.' },
+  
+  {name:'m00_beltbus_tdata', wave: 'xxxx2.....2.....2.2...', data: ['FID=1| Coarse&#8321 |Fine&#8321', 'FID=0|CoarseOverflow=1', 'FID=0|CoarseOverflow=2', 'FID=1| Coarse&#8322 |Fine&#8322']},
+
+
+
+   ],
+  
+  'config' : { 'hscale' : 2},
+  
+}
+
