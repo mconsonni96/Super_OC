@@ -39,7 +39,7 @@ If *BIT_FID = 0* the Belt Bus is removed and the output is a standard Axi4 Strea
 If *BIT_FID /= 0* and *s00_timestamp_tvalid = '1'*, the output corresponds exactly to the input (*m00_beltbus_tdata <= s00_timestamp_tdata*) if you have a measure (*fid = '1'*), otherwise if you have an Overflow (*fid = 0*) the *CoarseOverflow_cnt* is increased by one and the output contains the *fid* & *CoarseOverflow_cnt*.
 
 
-![input&output Image](OverflowCounter.doc/Input&Output.svg)
+![InputOutput Image](OverflowCounter.doc/InputOutput.svg)
 
 
 # Simulation
