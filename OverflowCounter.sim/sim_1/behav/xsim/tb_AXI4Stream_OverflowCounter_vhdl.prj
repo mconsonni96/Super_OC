@@ -1,0 +1,7 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../OverflowCounter.srcs/sources_1/imports/new/AXI4Stream_OverflowCounter.vhd" \
+"../../../../OverflowCounter.srcs/sim_1/imports/new/tb_AXI4Stream_OverflowCounter.vhd" \
+
+# Do not sort compile order
+nosort

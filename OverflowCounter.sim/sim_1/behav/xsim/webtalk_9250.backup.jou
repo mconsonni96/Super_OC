@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2017.3.1 (64-bit)
+# SW Build 2035080 on Fri Oct 20 14:20:00 MDT 2017
+# IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
+# Start of session at: Mon Sep  9 12:24:05 2019
+# Process ID: 9250
+# Current directory: /home/antonio_reale/Documenti/GitProjects/overflowcounter_antonioreale/OverflowCounter.sim/sim_1/behav/xsim
+# Command line: wbtcv -mode batch -source /home/antonio_reale/Documenti/GitProjects/overflowcounter_antonioreale/OverflowCounter.sim/sim_1/behav/xsim/xsim.dir/tb_AXI4Stream_OverflowCounter_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/antonio_reale/Documenti/GitProjects/overflowcounter_antonioreale/OverflowCounter.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: /home/antonio_reale/Documenti/GitProjects/overflowcounter_antonioreale/OverflowCounter.sim/sim_1/behav/xsim/webtalk.jou
+#-----------------------------------------------------------
+source /home/antonio_reale/Documenti/GitProjects/overflowcounter_antonioreale/OverflowCounter.sim/sim_1/behav/xsim/xsim.dir/tb_AXI4Stream_OverflowCounter_behav/webtalk/xsim_webtalk.tcl -notrace
