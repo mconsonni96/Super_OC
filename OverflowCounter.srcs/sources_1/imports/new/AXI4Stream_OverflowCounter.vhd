@@ -16,7 +16,7 @@
 
 ------------------------------------ DESCRIPTION ---------------------------------
 ----------------------------------------------------------------------------------
---					Overflow Counter in Timestamp AXI4 Stream					--
+--					Wrapper of Overflow Counter in Timestamp AXI4 Stream					--
 ----------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ entity AXI4Stream_OverflowCounter is
 	generic (
 
 		---------- Calibrated Timestamp Dimension ----
-	    BIT_FID				:	NATURAL							:=	0;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
+	    BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
 		BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					-- Bit of Coarse Counter, If 0 not Coarse counter is considered only Fine
 		BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
 		----------------------------------------------
@@ -64,22 +64,22 @@ entity AXI4Stream_OverflowCounter is
 
 		------------------ Reset/Clock ---------------
 		--------- Reset --------
-		reset   : IN    STD_LOGIC;														                        --  Asynchronous system reset active '1'
+		reset   : IN    STD_LOGIC;														                                        --  Asynchronous system reset active '1'
 		------------------------
 
 		--------- Clocks -------
-		clk     : IN    STD_LOGIC;			 											                        -- System clock
+		clk     : IN    STD_LOGIC;			 											                                        -- System clock
 		------------------------
 		----------------------------------------------
 
 		--------------- Timestamp Input ---------------
-		s00_timestamp_tvalid	:	IN	STD_LOGIC;																-- Valid Timestamp
-		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0); 	-- Timestamp dFID + COARSE + RESOLUTION
+		s00_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
+		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);   	-- Timestamp dFID + COARSE + RESOLUTION
 		-----------------------------------------------
 
 		--------------- BeltBus Output ----------------
-		m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																-- Valid Belt Bus
-		m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 		-- Belt Bus
+		m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																                -- Valid Belt Bus
+		m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 		-- Belt Bus
 		-----------------------------------------------
 
 	);
@@ -88,98 +88,92 @@ end AXI4Stream_OverflowCounter;
 
 architecture Behavioral of AXI4Stream_OverflowCounter is
 
-	------------------------- CONSTANTS DECLARATION ----------------------------
 
-	------- Coarse Counter OverFlow Manage -------
-	constant	BIT_OVERFLOW_CNT	:	POSITIVE	:=	BIT_COARSE + BIT_RESOLUTION;
-	----------------------------------------------
+	--------------------- Components Declaration ---------------------
 
-	----------- FID of the BeltBus --------------
-	constant	FID_OVERFLOW	:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=									-- 0
-		std_logic_vector(
-			to_unsigned(
-				0,
-				BIT_FID
-			)
+	COMPONENT OverflowCounter
+		generic (
+
+			---------- Calibrated Timestamp Dimension ----
+		    BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
+			BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					-- Bit of Coarse Counter, If 0 not Coarse counter is considered only Fine
+			BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
+			----------------------------------------------
 		);
 
-	constant	FID_MEASURE		:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=   								-- 1
-		std_logic_vector(
-			to_unsigned(
-				1,
-				BIT_FID
-			)
+		port(
+
+			------------------ Reset/Clock ---------------
+			--------- Reset --------
+			reset   : IN    STD_LOGIC;														                        --  Asynchronous system reset active '1'
+			------------------------
+
+			--------- Clocks -------
+			clk     : IN    STD_LOGIC;			 											                        -- System clock
+			------------------------
+			----------------------------------------------
+
+			--------------- Timestamp Input ---------------
+			timestamp_tvalid	:	IN	STD_LOGIC;															        -- Valid Timestamp
+			timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
+			-----------------------------------------------
+
+			--------------- BeltBus Output ----------------
+		    beltbus_tvalid	   :	OUT	STD_LOGIC;															    	-- Valid Belt Bus
+			beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)	    	-- Belt Bus
+			-----------------------------------------------
+
 		);
-	---------------------------------------------
-	----------------------------------------------------------------------------
 
+	END COMPONENT;
 
-	----------------------------- ALIAS DECLARATIONS ---------------------------
-	----------- FID of the BeltBus --------------
-	alias fid	:	STD_LOGIC_VECTOR(BIT_FID-1 DOWNTO 0) is s00_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO BIT_COARSE + BIT_RESOLUTION);
-	----------------------------------------------
-	----------------------------------------------------------------------------
-
-
-
-	-------------------------- SIGNALS DECLARATION -----------------------------
-	------- Coarse Counter OverFlow Manage -------
-	signal	CoarseOverflow_cnt	:	UNSIGNED(BIT_OVERFLOW_CNT-1 downto 0);										-- Overflow Counter
-	----------------------------------------------
-	----------------------------------------------------------------------------
 
 begin
 
-	------------------------- SYNCHRONOUS PROCESS --------------------------------
+	------------------ Components instantiation --------------------
 
 
-	------------- Sampling the CNT ----------
-	OverflowCNT : process (clk, reset)
-	begin
+	---------- OverflowCounter -----------
+	Inst_OverflowCounter : OverflowCounter
+		GENERIC MAP (
 
-		-- BeltBus with Overflow Counter
-		if BIT_FID /= 0 then
+			---------- Calibrated Timestamp Dimension ----
+			BIT_FID			=>	BIT_FID,
+			BIT_COARSE   	=>	BIT_COARSE,
 
-			if (reset = '1') then
-				m00_beltbus_tvalid	<=	'0';
-				CoarseOverflow_cnt	<=	(Others => '0');
+			BIT_RESOLUTION	=>	BIT_RESOLUTION
+			--------------------
 
-			elsif rising_edge (clk) then
+		)
+		PORT MAP(
 
-				m00_beltbus_tvalid	<=	s00_timestamp_tvalid;
+			------ Reset ------
+			reset	=> reset,
+			-------------------
 
-				if s00_timestamp_tvalid = '1' then
+			------ Clocks ------
+			clk		=> clk,
+			--------------------
 
-					if fid = FID_MEASURE then
-						m00_beltbus_tdata	<=	s00_timestamp_tdata;
+			--------------- Timestamp Input ---------------
+			timestamp_tvalid	=> s00_timestamp_tvalid,
+			timestamp_tdata		=> s00_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0),
+			-----------------------------------------------
 
-					elsif fid = FID_OVERFLOW then
-						CoarseOverflow_cnt	<=	CoarseOverflow_cnt +1;
-						m00_beltbus_tdata	<=	fid & std_logic_vector(CoarseOverflow_cnt +1);
-
-					end if;
-
-				end if;
-
-			end if;
-		-----------------------------------
-
-		-- No BeltBus No Overflow Counter --
-		else
-
-			m00_beltbus_tvalid	<=	s00_timestamp_tvalid;
-			m00_beltbus_tdata	<=	s00_timestamp_tdata;
-
-		end if;
-		-----------------------------------
+			--------------- BeltBus Output ----------------
+			beltbus_tvalid	    => m00_beltbus_tvalid,
+			beltbus_tdata		=> m00_beltbus_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)
+			-----------------------------------------------
+		);
+	---------------------------------
 
 
-	end process;
-	-----------------------------------------
+	------------------------------------------------------------------
 
-	----------------------------------------------------------------------------
-
-
-
+	------------------------------ DATA FLOW ------------------------------
+	----- Zero Padding of the AXI4-Stream ------
+	m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION) <= (others => '0');
+	---------------------------------------------
+	----------------------------------------------------------------------
 
 end Behavioral;

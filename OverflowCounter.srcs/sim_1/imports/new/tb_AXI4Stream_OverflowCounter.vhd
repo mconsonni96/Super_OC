@@ -68,7 +68,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 
 	-------------- Calibrated Timestamp Dimension --------------
-	constant BIT_FID             : NATURAL                         := 2;                -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the Belt Bus is removed and it is a standard axi4 stream
+	constant BIT_FID             : NATURAL                         := 1;                -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the Belt Bus is removed and it is a standard axi4 stream
 	constant BIT_COARSE          : NATURAL     RANGE   0   TO  32  := 8;				-- Bit of Coarse Counter, if 0 not Coarse Counter is considered only Fine
 	constant BIT_RESOLUTION      : POSITIVE    RANGE   1   TO  32  := 16;				-- Number of Bits of Calibrated TDL
 	---------------------------------------------
@@ -87,7 +87,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 		generic (
 
 			------------ Calibrated Timestamp Dimension  --------------
-		    BIT_FID				:	NATURAL							:=	0;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
+		    BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
 		    BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					-- Bit of Coarse Counter, If 0 not Coarse counter is considered only Fine
 	     	BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
 		    ----------------------------------------------
@@ -97,22 +97,22 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 		    ------------------ Reset/Clock ---------------
 		    --------- Reset --------
-			reset   : IN    STD_LOGIC;														              			--  Asynchronous system reset active '1'
+			reset   : IN    STD_LOGIC;														              			                --  Asynchronous system reset active '1'
 		    ------------------------
 
 		    --------- Clocks -------
-		 	clk     : IN    STD_LOGIC;			 																	-- System clock
+		 	clk     : IN    STD_LOGIC;			 																                	-- System clock
 		    ------------------------
 		    ----------------------------------------------
 
 		    --------------- Timestamp Input ---------------
-			s00_timestamp_tvalid	:	IN	STD_LOGIC;																-- Valid Timestamp
-			s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0); 	-- Timestamp dFID + COARSE + RESOLUTION
+			s00_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
+			s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
 		    -----------------------------------------------
 
 		    ------------ BeltBus Output --------------
-			m00_beltbus_tvalid	:	OUT	STD_LOGIC;																	-- Valid Belt Bus
-			m00_beltbus_tdata	:	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 			-- Belt Bus
+			m00_beltbus_tvalid	:	OUT	STD_LOGIC;																	                -- Valid Belt Bus
+			m00_beltbus_tdata	:	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 			-- Belt Bus
 		    -------------------------------------------
 
 		);
@@ -128,23 +128,23 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 	------------------ Reset/Clock ---------------
 	--------- Reset --------
-	signal	reset                   :  STD_LOGIC;																	-- Asynchronous system reset active '1'
+	signal	reset                   :  STD_LOGIC;																				 -- Asynchronous system reset active '1'
 	------------------------
 
 	--------- Clocks -------
-	signal	clk                     :  STD_LOGIC	:=	'1'; 														-- System clock
+	signal	clk                     :  STD_LOGIC	:=	'1'; 														             -- System clock
 	------------------------
 	----------------------------------------------
 
 
 	-------------------- Timestamp Input ------------------
-	signal	s00_timestamp_tvalid	:  STD_LOGIC;																	-- Valid Timestamp
-	signal	s00_timestamp_tdata	    :  STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 downto 0);			-- Timestamp dFID + COARSE + RESOLUTION
+	signal	s00_timestamp_tvalid	:  STD_LOGIC;																				 -- Valid Timestamp
+	signal	s00_timestamp_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 -- Timestamp dFID + COARSE + RESOLUTION
 	-------------------------------------------------------
 
 	-------------------- BeltBus Output -----------------
-	signal	m00_beltbus_tvalid   	:  STD_LOGIC;																	-- Valid Belt Bus
-	signal	m00_beltbus_tdata	    :  STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 downto 0);		    -- Belt Bus
+	signal	m00_beltbus_tvalid   	:  STD_LOGIC;																				 -- Valid Belt Bus
+	signal	m00_beltbus_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 -- Belt Bus
 	-----------------------------------------------------
 
 	----------------------------------------------------------------------------
