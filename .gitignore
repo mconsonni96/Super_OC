@@ -92,3 +92,5 @@
 #Script
 #########
 !*.sh
+!*.py
+!*Makefile
