@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="32" Path="/home/nicola/Documents/Vivado/Projects/Time-to-Digital Converter/OverflowCounter/OverflowCounter.xpr">
+<Project Version="7" Minor="32" Path="/home/nicola/Documents/Vivado/Projects/Time-to-Digital_Converter/OverflowCounter/OverflowCounter.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="cdfef8052e8b438280848ba8528c2fb0"/>
@@ -63,6 +63,13 @@
       </File>
       <File Path="$PSRCDIR/sources_1/imports/new/AXI4Stream_OverflowCounter.vhd">
         <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/new/AXI4Stream_OverflowCounterWrapper.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
