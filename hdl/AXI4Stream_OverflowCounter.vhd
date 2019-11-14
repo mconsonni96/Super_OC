@@ -46,15 +46,15 @@ library IEEE;
 ------------------------------------
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
---! \brief This is the wrapping of OverflowCounter for AXI4-Stream interface for IP_Core.
---! \image html IP-Core.png  [IP-Core image]
+--! \brief This is the wrapping of OverflowCounter for AXI4-Stream interface for IP-Core.
+--! \image html OverflowCounter_IP-Core.png  [IP-Core image]
 ---------------------------------------------------------------------------------
 -----------------------------ENTITY DESCRIPTION --------------------------------
 --! \brief The entity of this module can be described by the following images:
 --! \details in the first one we see the Vivado representation of the Generic
---! \image html Generic.png  [Generic IP-Core image]
+--! \image html OverflowCounter_Generic.png  [IP-Core Generic]
 --! \brief in the second image we see the Vivado representation of the IP-Core with the signals
---! \image html Signals.png  [Signals image]
+--! \image html OverflowCounter_Signals.png  [IP-Core Signals]
 ----------------------------------------------------------------------------------
 
 
@@ -84,7 +84,7 @@ entity AXI4Stream_OverflowCounter is
 
 		--------------- Timestamp Input ---------------
 		s00_timestamp_tvalid	:	IN	STD_LOGIC;																                --! Valid Timestamp
-		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);   	--! Timestamp dFID + COARSE + RESOLUTION
+		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);   	--! Timestamp FID + COARSE + RESOLUTION
 		-----------------------------------------------
 
 		--------------- BeltBus Output ----------------
