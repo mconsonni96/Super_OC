@@ -50,7 +50,8 @@ library IEEE;
 ---------------------------------------------------------------------------------
 
 -----------------------------ENTITY DESCRIPTION --------------------------------
---! \brief The entity of this module is equal to the one of the top module
+--! \brief The entity of this module is equal to the one of the top module, except for the fact
+--! that here we have the bit length of the data that are not necessarily a multiple of 8
 ----------------------------------------------------------------------------------
 
 
@@ -60,9 +61,9 @@ entity AXI4Stream_OverflowCounterWrapper is
 	generic (
 
 		---------- Calibrated Timestamp Dimension ----
-		BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
-		BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					-- Bit of Coarse Counter, If 0 not Coarse counter is considered only Fine
-		BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
+		BIT_FID				:	NATURAL							:=	1;			        --! Bit Dimension of the Fid part of the Timestamp. If *BIT_FID = 0* the belt bus is removed and it is a standard axi4 stream
+		BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					--! Bit Dimension of the Coarse part of the Timestamp
+		BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					--! Bit Dimension of the Fine part of the Timestamp
 		----------------------------------------------
 	);
 
@@ -70,22 +71,22 @@ entity AXI4Stream_OverflowCounterWrapper is
 
 		------------------ Reset/Clock ---------------
 		--------- Reset --------
-		reset   : IN    STD_LOGIC;														                                        --  Asynchronous system reset active '1'
+		reset   : IN    STD_LOGIC;														                                        --!  Asynchronous system reset active '1'
 		------------------------
 
 		--------- Clocks -------
-		clk     : IN    STD_LOGIC;			 											                                        -- System clock
+		clk     : IN    STD_LOGIC;			 											                                        --! System clock
 		------------------------
 		----------------------------------------------
 
 		--------------- Timestamp Input ---------------
-		s00_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
-		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					-- Timestamp dFID + COARSE + RESOLUTION
+		s00_timestamp_tvalid	:	IN	STD_LOGIC;																                --! Valid Timestamp
+		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					--! Timestamp FID + COARSE + RESOLUTION
 		-----------------------------------------------
 
 		--------------- BeltBus Output ----------------
-		m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																                -- Valid Belt Bus
-		m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 						-- Belt Bus
+		m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																                --! Valid Belt Bus
+		m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 						--! Belt Bus
 		-----------------------------------------------
 
 	);
@@ -93,13 +94,13 @@ entity AXI4Stream_OverflowCounterWrapper is
 end AXI4Stream_OverflowCounterWrapper;
 
 ------------------------ ARCHITECTURE DESCRIPTION ------------------------------
---! \brief The module instantiates the OverflowCounter.
+--! \brief The AXI4Stream_OverflowCounterWrapper is basically the wrapper for the hdl
 ----------------------------------------------------------------------------------
 
 architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 
 	--------------------------- COMPONENT DESCRIPTION ------------------------------
-		--! \brief We have the OverflowCounter
+		--! \brief The OverflowCounter basically counts the number of Overflow
 		--------------------------------------------------------------------------------
 
 	--------------------- Components Declaration ---------------------
@@ -144,7 +145,8 @@ architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 begin
 
 	------------------- COMPONENT INSTANTITION DESCRIPTION ---------------------
-	--! \brief PLUTO
+	--! \brief Basically the OverflowCounter sends the signals
+	--! that it generates to the AXI4Stream_OverflowCounterWrapper
 	----------------------------------------------------------------------------
 	------------------ Components instantiation --------------------
 

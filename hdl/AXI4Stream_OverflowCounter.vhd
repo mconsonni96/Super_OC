@@ -135,7 +135,7 @@ architecture Behavioral of AXI4Stream_OverflowCounter is
 
 			--------------- Timestamp Input ---------------
 			s00_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
-			s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					-- Timestamp dFID + COARSE + RESOLUTION
+			s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					-- Timestamp FID + COARSE + RESOLUTION
 			-----------------------------------------------
 
 			--------------- BeltBus Output ----------------
@@ -198,8 +198,9 @@ begin
 
 	------------------------------ DATA FLOW ------------------------------
 	----- Zero Padding of the AXI4-Stream ------
-	m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION) <= (others => '0');
-	---------------------------------------------
+	m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION) <= (others => '0');		--! We put to '0' the bits that are not meaningful,
+	---------------------------------------------																		--! which are the bits that are needed just to reach the multiple of 8
 	----------------------------------------------------------------------
+
 
 end Behavioral;

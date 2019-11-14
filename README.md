@@ -91,7 +91,7 @@ Count the number of Overflow and send it in output depending on the value of the
  - **beltbus_tdata**: Output data, *STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 downto 0)* type.
 
 
-If *BIT_FID = 0* the Belt Bus is removed and the output is a standard Axi4 Stream. In this case the module is trasparent and the input is transferred unchanged to the output (*beltbus_tvalid <= timestamp_tvalid*, *beltbus_tdata <= timestamp_tdata*). Morover the Counter of Overflow(*CoarseOverflow_cnt*) is not enabled.
+If *BIT_FID = 0* the Belt Bus is removed and the output is a standard Axi4 Stream. In this case the module is trasparent and the input is transferred unchanged to the output (*beltbus_tvalid <= timestamp_tvalid*, *beltbus_tdata <= timestamp_tdata*). Moreover the Counter of Overflow(*CoarseOverflow_cnt*) is not enabled.
 If *BIT_FID /= 0* and *timestamp_tvalid = '1'*, the output corresponds exactly to the input (*beltbus_tdata <= timestamp_tdata*) if you have a measure (*fid = '1'*), otherwise if you have an Overflow (*fid = 0*) the *CoarseOverflow_cnt* is increased by one and the output contains the *fid* & *CoarseOverflow_cnt*.
 
 

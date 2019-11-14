@@ -46,12 +46,12 @@ library IEEE;
 ------------------------------------
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
---! \brief This module counts the number of Overflow and send it in output depending on the value of the FID.
+--! \brief This module counts the number of Overflow and sends it in output depending on the value of the FID.
 ---------------------------------------------------------------------------------
 
 -----------------------------ENTITY DESCRIPTION --------------------------------
---! \brief The entity of this module is equal to the
---! one of the top module more or less
+--! \brief The entity of this module is basically equal to the
+--! one of the AXI4Stream_OverflowCounterWrapper
 ----------------------------------------------------------------------------------
 
 
@@ -60,9 +60,9 @@ entity OverflowCounter is
 	generic (
 
 		---------- Calibrated Timestamp Dimension ----
-	    BIT_FID				:	NATURAL							:=	0;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
-		BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					-- Bit of Coarse Counter, If 0 not Coarse counter is considered only Fine
-		BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
+	    BIT_FID				:	NATURAL							:=	0;			        --! Bit Dimension of the Fid part of the Timestamp. If *BIT_FID = 0* the belt bus is removed and it is a standard axi4 stream
+		BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					--! Bit Dimension of the Coarse part of the Timestamp, If 0 not Coarse counter is considered only Fine
+		BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					--! Bit Dimension of the Fine part of the Timestamp, number of Bits of the Calibrated_TDL
 		----------------------------------------------
 	);
 
@@ -70,22 +70,22 @@ entity OverflowCounter is
 
 		------------------ Reset/Clock ---------------
 		--------- Reset --------
-		reset   : IN    STD_LOGIC;														                        --  Asynchronous system reset active '1'
+		reset   : IN    STD_LOGIC;														                        --! Asynchronous system reset active '1'
 		------------------------
 
 		--------- Clocks -------
-		clk     : IN    STD_LOGIC;			 											                        -- System clock
+		clk     : IN    STD_LOGIC;			 											                        --! System clock
 		------------------------
 		----------------------------------------------
 
 		--------------- Timestamp Input ---------------
-		timestamp_tvalid	:	IN	STD_LOGIC;															    	-- Valid Timestamp
-		timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
+		timestamp_tvalid	:	IN	STD_LOGIC;															    	--! Valid Timestamp
+		timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0); 	    --! Timestamp FID + COARSE + RESOLUTION
 		-----------------------------------------------
 
 		--------------- BeltBus Output ----------------
-	    beltbus_tvalid	   :	OUT	STD_LOGIC;															    	-- Valid Belt Bus
-		beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 	    	-- Belt Bus
+	    beltbus_tvalid	   :	OUT	STD_LOGIC;															    	--! Valid Belt Bus
+		beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 	    	--! Belt Bus
 		-----------------------------------------------
 
 	);
@@ -95,7 +95,7 @@ end OverflowCounter;
 ------------------------ ARCHITECTURE DESCRIPTION ------------------------------
 --! \brief If *BIT_FID = 0* the Belt Bus is removed and the output is a standard Axi4 Stream.
 --! In this case the module is trasparent and the input is transferred unchanged to the output (*beltbus_tvalid <= timestamp_tvalid*, *beltbus_tdata <= timestamp_tdata*).
---! \details Morover the Counter of Overflow(*CoarseOverflow_cnt*) is not enabled.
+--! \details Moreover the Counter of Overflow(*CoarseOverflow_cnt*) is not enabled.
 --! If *BIT_FID /= 0* and *timestamp_tvalid = '1'*, the output corresponds exactly
 --! to the input (*beltbus_tdata <= timestamp_tdata*) if you have a measure (*fid = '1'*),
 --! otherwise if you have an Overflow (*fid = 0*) the *CoarseOverflow_cnt* is increased by one and the output contains the *fid* & *CoarseOverflow_cnt*.
@@ -112,7 +112,7 @@ architecture Behavioral of OverflowCounter is
 	----------------------------------------------
 
 	----------- FID of the BeltBus --------------
-	constant	FID_OVERFLOW	:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=									-- 0
+	constant	FID_OVERFLOW	:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=									--! 0
 		std_logic_vector(
 			to_unsigned(
 				0,
@@ -120,7 +120,7 @@ architecture Behavioral of OverflowCounter is
 			)
 		);
 
-	constant	FID_MEASURE		:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=   								-- 1
+	constant	FID_MEASURE		:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=   								--! 1
 		std_logic_vector(
 			to_unsigned(
 				1,
@@ -141,7 +141,7 @@ architecture Behavioral of OverflowCounter is
 
 	-------------------------- SIGNALS DECLARATION -----------------------------
 	------- Coarse Counter OverFlow Manage -------
-	signal	CoarseOverflow_cnt	:	UNSIGNED(BIT_OVERFLOW_CNT-1 downto 0);										-- Overflow Counter
+	signal	CoarseOverflow_cnt	:	UNSIGNED(BIT_OVERFLOW_CNT-1 downto 0);										--! Overflow Counter
 	----------------------------------------------
 	----------------------------------------------------------------------------
 
