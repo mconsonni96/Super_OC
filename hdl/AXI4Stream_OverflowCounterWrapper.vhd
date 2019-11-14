@@ -44,8 +44,14 @@ library IEEE;
 -- library work;
 
 ------------------------------------
+--------------------------BRIEF MODULE DESCRIPTION -----------------------------
+--! \file
+--! \brief This is the wrapping of OverflowCounter for AXI4-Stream interface for Hdl.
+---------------------------------------------------------------------------------
 
-
+-----------------------------ENTITY DESCRIPTION --------------------------------
+--! \brief The entity of this module is equal to the one of the top module
+----------------------------------------------------------------------------------
 
 
 
@@ -86,8 +92,15 @@ entity AXI4Stream_OverflowCounterWrapper is
 
 end AXI4Stream_OverflowCounterWrapper;
 
+------------------------ ARCHITECTURE DESCRIPTION ------------------------------
+--! \brief The module instantiates the OverflowCounter.
+----------------------------------------------------------------------------------
+
 architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 
+	--------------------------- COMPONENT DESCRIPTION ------------------------------
+		--! \brief We have the OverflowCounter
+		--------------------------------------------------------------------------------
 
 	--------------------- Components Declaration ---------------------
 
@@ -130,6 +143,9 @@ architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 
 begin
 
+	------------------- COMPONENT INSTANTITION DESCRIPTION ---------------------
+	--! \brief PLUTO
+	----------------------------------------------------------------------------
 	------------------ Components instantiation --------------------
 
 

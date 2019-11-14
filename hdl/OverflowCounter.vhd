@@ -44,9 +44,15 @@ library IEEE;
 -- library work;
 
 ------------------------------------
+--------------------------BRIEF MODULE DESCRIPTION -----------------------------
+--! \file
+--! \brief This module counts the number of Overflow and send it in output depending on the value of the FID.
+---------------------------------------------------------------------------------
 
-
-
+-----------------------------ENTITY DESCRIPTION --------------------------------
+--! \brief The entity of this module is equal to the
+--! one of the top module more or less
+----------------------------------------------------------------------------------
 
 
 entity OverflowCounter is
@@ -85,6 +91,17 @@ entity OverflowCounter is
 	);
 
 end OverflowCounter;
+
+------------------------ ARCHITECTURE DESCRIPTION ------------------------------
+--! \brief If *BIT_FID = 0* the Belt Bus is removed and the output is a standard Axi4 Stream.
+--! In this case the module is trasparent and the input is transferred unchanged to the output (*beltbus_tvalid <= timestamp_tvalid*, *beltbus_tdata <= timestamp_tdata*).
+--! \details Morover the Counter of Overflow(*CoarseOverflow_cnt*) is not enabled.
+--! If *BIT_FID /= 0* and *timestamp_tvalid = '1'*, the output corresponds exactly
+--! to the input (*beltbus_tdata <= timestamp_tdata*) if you have a measure (*fid = '1'*),
+--! otherwise if you have an Overflow (*fid = 0*) the *CoarseOverflow_cnt* is increased by one and the output contains the *fid* & *CoarseOverflow_cnt*.
+--! In the following figure we can see the concept just explained
+--! \image html InputOutput.svg
+----------------------------------------------------------------------------------
 
 architecture Behavioral of OverflowCounter is
 
@@ -131,7 +148,9 @@ architecture Behavioral of OverflowCounter is
 begin
 
 	------------------------- SYNCHRONOUS PROCESS --------------------------------
-
+	------------------------ PROCESS DESCRIPTION ------------------------------
+	--! \vhdlflow [Overflow_Counter]
+	----------------------------------------------------------------------------------
 
 	------------- Sampling the CNT ----------
 	OverflowCNT : process (clk, reset)

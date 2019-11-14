@@ -44,8 +44,18 @@ library IEEE;
 -- library work;
 
 ------------------------------------
-
-
+--------------------------BRIEF MODULE DESCRIPTION -----------------------------
+--! \file
+--! \brief This is the wrapping of OverflowCounter for AXI4-Stream interface for IP_Core.
+--! \image html IP-Core.png  [IP-Core image]
+---------------------------------------------------------------------------------
+-----------------------------ENTITY DESCRIPTION --------------------------------
+--! \brief The entity of this module can be described by the following images:
+--! \details in the first one we see the Vivado representation of the Generic
+--! \image html Generic.png  [Generic IP-Core image]
+--! \brief in the second image we see the Vivado representation of the IP-Core with the signals
+--! \image html Signals.png  [Signals image]
+----------------------------------------------------------------------------------
 
 
 
@@ -54,9 +64,9 @@ entity AXI4Stream_OverflowCounter is
 	generic (
 
 		---------- Calibrated Timestamp Dimension ----
-	    BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
-		BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					-- Bit of Coarse Counter, If 0 not Coarse counter is considered only Fine
-		BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
+    	BIT_FID				:	NATURAL							:=	1;			--! Bit Dimension of the Fid part of the Timestamp. If *BIT_FID = 0* the belt bus is removed and it is a standard axi4 stream.
+		BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;			--! Bit Dimension of the Coarse part of the Timestamp
+		BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16			--! Bit Dimension of the Fine part of the Timestamp
 		----------------------------------------------
 	);
 
@@ -64,38 +74,48 @@ entity AXI4Stream_OverflowCounter is
 
 		------------------ Reset/Clock ---------------
 		--------- Reset --------
-		reset   : IN    STD_LOGIC;														                                        --  Asynchronous system reset active '1'
+		reset   : IN    STD_LOGIC;												--! Asynchronous system reset active '1'
 		------------------------
 
 		--------- Clocks -------
-		clk     : IN    STD_LOGIC;			 											                                        -- System clock
+		clk     : IN    STD_LOGIC;			 									--! System clock
 		------------------------
 		----------------------------------------------
 
 		--------------- Timestamp Input ---------------
-		s00_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
-		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);   	-- Timestamp dFID + COARSE + RESOLUTION
+		s00_timestamp_tvalid	:	IN	STD_LOGIC;																                --! Valid Timestamp
+		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);   	--! Timestamp dFID + COARSE + RESOLUTION
 		-----------------------------------------------
 
 		--------------- BeltBus Output ----------------
-		m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																                -- Valid Belt Bus
-		m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 		-- Belt Bus
+		m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																                --! Valid Belt Bus
+		m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 		--! Belt Bus
 		-----------------------------------------------
 
 	);
 
 end AXI4Stream_OverflowCounter;
 
+------------------------ ARCHITECTURE DESCRIPTION ------------------------------
+--! The module instantiates the *AXI4Stream_OverflowCounterWrapper*, set to '0' the MSBs of the output data
+--! (*m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION)*)
+--! and rename the input and output interfaces with AXI4-Stream, input as slave and output as master.
+----------------------------------------------------------------------------------
+
 architecture Behavioral of AXI4Stream_OverflowCounter is
+
+	--------------------------- COMPONENT DESCRIPTION ------------------------------
+	--! \brief The AXI4Stream_OverflowCounterWrapper is basically the wrapper for the hdl
+	--------------------------------------------------------------------------------
 
 
 	--------------------- Components Declaration ---------------------
 
-	COMPONENT OverflowCounter
+	COMPONENT AXI4Stream_OverflowCounterWrapper
 		generic (
 
 			---------- Calibrated Timestamp Dimension ----
-		    BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
+			BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
 			BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					-- Bit of Coarse Counter, If 0 not Coarse counter is considered only Fine
 			BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
 			----------------------------------------------
@@ -105,36 +125,42 @@ architecture Behavioral of AXI4Stream_OverflowCounter is
 
 			------------------ Reset/Clock ---------------
 			--------- Reset --------
-			reset   : IN    STD_LOGIC;														                        --  Asynchronous system reset active '1'
+			reset   : IN    STD_LOGIC;														                                        --  Asynchronous system reset active '1'
 			------------------------
 
 			--------- Clocks -------
-			clk     : IN    STD_LOGIC;			 											                        -- System clock
+			clk     : IN    STD_LOGIC;			 											                                        -- System clock
 			------------------------
 			----------------------------------------------
 
 			--------------- Timestamp Input ---------------
-			timestamp_tvalid	:	IN	STD_LOGIC;															        -- Valid Timestamp
-			timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
+			s00_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
+			s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					-- Timestamp dFID + COARSE + RESOLUTION
 			-----------------------------------------------
 
 			--------------- BeltBus Output ----------------
-		    beltbus_tvalid	   :	OUT	STD_LOGIC;															    	-- Valid Belt Bus
-			beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)	    	-- Belt Bus
+			m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																                -- Valid Belt Bus
+			m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 						-- Belt Bus
 			-----------------------------------------------
 
 		);
+
 
 	END COMPONENT;
 
 
 begin
 
+	------------------- COMPONENT INSTANTITION DESCRIPTION ---------------------
+	--! Basically the AXI4Stream_OverflowCounter and the AXI4Stream_OverflowCounterWrapper have everything in common,
+	--! a part from the fact that the data of the first one have a length
+	--! that is a multiple of 8 in order to cope with the IP-Core requests
+	----------------------------------------------------------------------------
 	------------------ Components instantiation --------------------
 
 
-	---------- OverflowCounter -----------
-	Inst_OverflowCounter : OverflowCounter
+	-- AXI4Stream_OverflowCounterWrapper --
+	Inst_AXI4Stream_OverflowCounterWrapper : AXI4Stream_OverflowCounterWrapper
 		GENERIC MAP (
 
 			---------- Calibrated Timestamp Dimension ----
@@ -156,13 +182,13 @@ begin
 			--------------------
 
 			--------------- Timestamp Input ---------------
-			timestamp_tvalid	=> s00_timestamp_tvalid,
-			timestamp_tdata		=> s00_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0),
+			s00_timestamp_tvalid	=> s00_timestamp_tvalid,
+			s00_timestamp_tdata		=> s00_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0),
 			-----------------------------------------------
 
 			--------------- BeltBus Output ----------------
-			beltbus_tvalid	    => m00_beltbus_tvalid,
-			beltbus_tdata		=> m00_beltbus_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)
+			m00_beltbus_tvalid	    => m00_beltbus_tvalid,
+			m00_beltbus_tdata		=> m00_beltbus_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)
 			-----------------------------------------------
 		);
 	---------------------------------
