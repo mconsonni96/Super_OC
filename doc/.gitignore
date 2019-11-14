@@ -11,7 +11,5 @@
 *.idb
 *.pdb
 
-/doxygen_docs
-/doxygen.tag
 /build*
 /html
