@@ -16,7 +16,7 @@ We can find in "OverflowCounter/hdl" the following module directory:
 ## AXI4Stream_OverflowCounter (IP-Core)
 Wrapping of OverflowCounter for AXI4-Stream interface for IP-Core.
 
-![IP-Core Image](doc/Img/OverflowCounter_IP-Core.png)
+![IP-Core Image](doc/img/OverflowCounter_IP-Core.png)
 
 ### Generic
 
@@ -24,7 +24,7 @@ Wrapping of OverflowCounter for AXI4-Stream interface for IP-Core.
  - **BIT_COARSE**: Bit Dimension of the Coarse part of the Timestamp, *NATURAL* type *RANGE 0 TO 32*.
  - **BIT_RESOLUTION**: Bit Dimension of the Fine part of the Timestamp, *POSITIVE* type *RANGE 1 TO 32*.
 
- ![Generic Image](doc/Img/OverflowCounter_Generic.png)
+ ![Generic Image](doc/img/OverflowCounter_Generic.png)
 
 ### Port
 
@@ -40,7 +40,7 @@ Wrapping of OverflowCounter for AXI4-Stream interface for IP-Core.
      - **m00_beltbus_tvalid**: Valid of the output data, *STD_LOGIC* type.
      - **m00_beltbus_tdata**: Output data with the proper FID padded to upper byte dimension *STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)* * *8)-1 DOWNTO 0)* type, used only *STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 downto 0)* type.
 
-![Signals Image](doc/Img/OverflowCounter_Signals.png)
+![Signals Image](doc/img/OverflowCounter_Signals.png)
 
 The module instantiates the *AXI4Stream_OverflowCounterWrapper*, set to '0' the MSBs of the output data (*m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION)*) and rename the input and output interfaces with AXI4-Stream, input as slave and output as master.
 
@@ -95,7 +95,7 @@ If *BIT_FID = 0* the Belt Bus is removed and the output is a standard Axi4 Strea
 If *BIT_FID /= 0* and *timestamp_tvalid = '1'*, the output corresponds exactly to the input (*beltbus_tdata <= timestamp_tdata*) if you have a measure (*fid = '1'*), otherwise if you have an Overflow (*fid = 0*) the *CoarseOverflow_cnt* is increased by one and the output contains the *fid* & *CoarseOverflow_cnt*.
 
 
-![InputOutput Image](doc/Img/InputOutput.svg)
+![InputOutput Image](doc/img/InputOutput.svg)
 
 
 # Simulation
@@ -105,4 +105,4 @@ We can find in "OverflowCounter/src" the following module directory:
  - **tb_AXI4Stream_OverflowCounter_behav**: Waveform of *tb_AXI4Stream_OverflowCounter*.
 
 
-![wave Image](doc//Img/wave.png)
+![wave Image](doc/img/wave.png)
