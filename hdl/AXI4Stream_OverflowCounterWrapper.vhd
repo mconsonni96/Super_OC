@@ -100,8 +100,8 @@ end AXI4Stream_OverflowCounterWrapper;
 architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 
 	--------------------------- COMPONENT DESCRIPTION ------------------------------
-		--! \brief The OverflowCounter basically counts the number of Overflow
-		--------------------------------------------------------------------------------
+	--! \brief The OverflowCounter basically counts the number of Overflow
+	--------------------------------------------------------------------------------
 
 	--------------------- Components Declaration ---------------------
 
