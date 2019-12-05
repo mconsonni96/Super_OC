@@ -47,7 +47,11 @@ library IEEE;
 
 ------------------------------------
 
-
+--------------------------BRIEF MODULE DESCRIPTION -----------------------------
+--! \file
+--! \brief This is the testbench of the OverflowCounter.
+--! \image html wave.png  [IP-Core image]
+---------------------------------------------------------------------------------
 
 
 
@@ -60,17 +64,17 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 	--------------------- CONSTANTS NON IN PACKAGE -----------------------------
 
 	---------------- Timing -------------------
-	constant	CLK_PERIOD 	: time := 10 ns;
-	constant	RESET_WAIT 	: time := 100 ns;
+	constant	CLK_PERIOD 	: time := 10 ns;									--! Period of the testing clock
+	constant	RESET_WAIT 	: time := 100 ns;									--! Reset duration
 
-	constant	VALID_WAIT 	: time := 2*CLK_PERIOD;
+	constant	VALID_WAIT 	: time := 2*CLK_PERIOD;								--! Valid
 	--------------------------------------------
 
 
 	-------------- Calibrated Timestamp Dimension --------------
-	constant BIT_FID             : NATURAL                         := 1;                -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the Belt Bus is removed and it is a standard axi4 stream
-	constant BIT_COARSE          : NATURAL     RANGE   0   TO  32  := 8;				-- Bit of Coarse Counter, if 0 not Coarse Counter is considered only Fine
-	constant BIT_RESOLUTION      : POSITIVE    RANGE   1   TO  32  := 16;				-- Number of Bits of Calibrated TDL
+	constant BIT_FID             : NATURAL                         := 1;                --! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
+	constant BIT_COARSE          : NATURAL     RANGE   0   TO  32  := 8;				--! BBit Dimension of the Coarse part of the Timestamp
+	constant BIT_RESOLUTION      : POSITIVE    RANGE   1   TO  32  := 16;				--! Bit Dimension of the Fine part of the Timestamp
 	---------------------------------------------
 
 
@@ -128,23 +132,23 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 	------------------ Reset/Clock ---------------
 	--------- Reset --------
-	signal	reset                   :  STD_LOGIC;																				 -- Asynchronous system reset active '1'
+	signal	reset                   :  STD_LOGIC;																				 --! Asynchronous system reset active '1'
 	------------------------
 
 	--------- Clocks -------
-	signal	clk                     :  STD_LOGIC	:=	'1'; 														             -- System clock
+	signal	clk                     :  STD_LOGIC	:=	'1'; 														             --! System clock
 	------------------------
 	----------------------------------------------
 
 
 	-------------------- Timestamp Input ------------------
-	signal	s00_timestamp_tvalid	:  STD_LOGIC;																				 -- Valid Timestamp
-	signal	s00_timestamp_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 -- Timestamp dFID + COARSE + RESOLUTION
+	signal	s00_timestamp_tvalid	:  STD_LOGIC;																				 --! Valid Timestamp
+	signal	s00_timestamp_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp dFID + COARSE + RESOLUTION
 	-------------------------------------------------------
 
 	-------------------- BeltBus Output -----------------
-	signal	m00_beltbus_tvalid   	:  STD_LOGIC;																				 -- Valid Belt Bus
-	signal	m00_beltbus_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 -- Belt Bus
+	signal	m00_beltbus_tvalid   	:  STD_LOGIC;																				 --! Valid Belt Bus
+	signal	m00_beltbus_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Belt Bus
 	-----------------------------------------------------
 
 	----------------------------------------------------------------------------
@@ -212,6 +216,9 @@ BEGIN
 	clk	<=	not	clk	after	 CLK_PERIOD/2;
 
 
+	------------------------ PROCESS DESCRIPTION ------------------------------
+	--! \vhdlflow [sim_process]
+	----------------------------------------------------------------------------------
 	----- Reset Process --------
 	sim_process :process
 	begin
