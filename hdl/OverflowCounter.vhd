@@ -108,11 +108,11 @@ architecture Behavioral of OverflowCounter is
 	------------------------- CONSTANTS DECLARATION ----------------------------
 
 	------- Coarse Counter OverFlow Manage -------
-	constant	BIT_OVERFLOW_CNT	:	POSITIVE	:=	BIT_COARSE + BIT_RESOLUTION;
+	constant	BIT_OVERFLOW_CNT	:	POSITIVE	:=	BIT_COARSE + BIT_RESOLUTION;							--! Coarse Counter OverFlow Manage
 	----------------------------------------------
 
 	----------- FID of the BeltBus --------------
-	constant	FID_OVERFLOW	:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=									--! 0
+	constant	FID_OVERFLOW	:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=									--! 0 means overflow
 		std_logic_vector(
 			to_unsigned(
 				0,
@@ -120,7 +120,7 @@ architecture Behavioral of OverflowCounter is
 			)
 		);
 
-	constant	FID_MEASURE		:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=   								--! 1
+	constant	FID_MEASURE		:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=   								--! 1 means measure
 		std_logic_vector(
 			to_unsigned(
 				1,
@@ -133,7 +133,7 @@ architecture Behavioral of OverflowCounter is
 
 	----------------------------- ALIAS DECLARATIONS ---------------------------
 	----------- FID of the BeltBus --------------
-	alias fid	:	STD_LOGIC_VECTOR(BIT_FID-1 DOWNTO 0) is timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO BIT_COARSE + BIT_RESOLUTION);
+	alias fid	:	STD_LOGIC_VECTOR(BIT_FID-1 DOWNTO 0) is timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO BIT_COARSE + BIT_RESOLUTION);			--! FID of the BeltBus
 	----------------------------------------------
 	----------------------------------------------------------------------------
 
