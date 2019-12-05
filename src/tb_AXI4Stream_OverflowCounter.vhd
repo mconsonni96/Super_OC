@@ -49,7 +49,7 @@ library IEEE;
 
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
---! \brief This is the testbench of the OverflowCounter.
+--! \brief This is the testbench of the OverflowCounter. In the following figure we see the result of the simulation
 --! \image html wave.png  [IP-Core image]
 ---------------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 	constant	CLK_PERIOD 	: time := 10 ns;									--! Period of the testing clock
 	constant	RESET_WAIT 	: time := 100 ns;									--! Reset duration
 
-	constant	VALID_WAIT 	: time := 2*CLK_PERIOD;								--! Valid
+	constant	VALID_WAIT 	: time := 2*CLK_PERIOD;								--! Time to be waited before the valid goes to 1
 	--------------------------------------------
 
 
@@ -143,7 +143,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 	-------------------- Timestamp Input ------------------
 	signal	s00_timestamp_tvalid	:  STD_LOGIC;																				 --! Valid Timestamp
-	signal	s00_timestamp_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp dFID + COARSE + RESOLUTION
+	signal	s00_timestamp_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp FID + COARSE + RESOLUTION
 	-------------------------------------------------------
 
 	-------------------- BeltBus Output -----------------
