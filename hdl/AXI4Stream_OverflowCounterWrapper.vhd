@@ -29,7 +29,7 @@ library IEEE;
 	use IEEE.STD_LOGIC_1164.all;
 	--! Numeric library
 	use IEEE.NUMERIC_STD.ALL;
---	-- ! Math operation over real number (not for implementattion)
+--	-- ! Math operation over real number (not for implementation)
 --	-- use IEEE.MATH_REAL.all;
 ------------------------------------
 
