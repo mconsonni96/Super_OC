@@ -174,7 +174,7 @@ BEGIN
 
 
 	----- AXI4Stream_OverflowCounter -----
-	--! \brief Instantietion of the Device Under Test
+	--! \brief Instantiation of the Device Under Test
 	dut_AXI4Stream_OverflowCounter	:	AXI4Stream_OverflowCounter
 		generic map(
 

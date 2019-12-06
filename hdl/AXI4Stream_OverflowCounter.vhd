@@ -15,7 +15,7 @@
 -------------------------------------------------------------------------------------------------------------------------
 
 
---------------------------BRIEF MODULE DESCRIPTION -----------------------------
+------------------------- BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
 --! \brief This is the wrapping of OverflowCounter for AXI4-Stream interface for IP-Core.
 --! \image html OverflowCounter_IP-Core.png  [IP-Core image]
