@@ -14,40 +14,54 @@
 -------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------
 
------------------------------------- DESCRIPTION ---------------------------------
-----------------------------------------------------------------------------------
---					Overflow Counter in Timestamp AXI4 Stream					--
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
-
-
----------- DEFAULT LIBRARY ---------
-library IEEE;
-	use IEEE.STD_LOGIC_1164.all;
-	use IEEE.NUMERIC_STD.ALL;
-	--use IEEE.MATH_REAL.all;
-
--- library STD;
-	-- 	use STD.textio.all;
-------------------------------------
-
-
----------- OTHERS LIBRARY ----------
-
--- library UNISIM;
--- 	use UNISIM.VComponents.all;
-
--- library xpm;
--- 	use xpm.vcomponents.all;
-
-
--- library work;
-
-------------------------------------
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
 --! \brief This module counts the number of Overflow and sends it in output depending on the value of the FID.
 ---------------------------------------------------------------------------------
+
+
+----------------------------- LIBRARY DECLARATION ------------------------------
+
+------------ IEEE LIBRARY -----------
+--! Standard IEEE library
+library IEEE;
+	--! Standard Logic Vector library
+	use IEEE.STD_LOGIC_1164.all;
+	--! Numeric library
+	use IEEE.NUMERIC_STD.ALL;
+--	--! Math operation over real number (not for implementattion)
+--	--use IEEE.MATH_REAL.all;
+------------------------------------
+
+-- ------------ STD LIBRARY -----------
+-- --! Standard
+-- library STD;
+-- 	--! Textual Input/Output (only in simulation)
+-- 	use STD.textio.all;
+-- ------------------------------------
+
+
+-- ---------- XILINX LIBRARY ----------
+-- --! Xilinx Unisim library
+-- library UNISIM;
+-- 	--! Xilinx Unisim VComponent library
+-- 	use UNISIM.VComponents.all;
+--
+-- --! \brief Xilinx Parametric Macro library
+-- --! \details To be correctly used in Vivado write auto_detect_xpm into tcl console.
+-- library xpm;
+-- 	--! Xilinx Parametric Macro VComponent library
+-- 	use xpm.vcomponents.all;
+-- ------------------------------------
+
+
+-- ------------ LOCAL LIBRARY ---------
+-- --! Project defined libary
+-- library work;
+-- ------------------------------------
+
+--------------------------------------------------------------------------------
+
 
 -----------------------------ENTITY DESCRIPTION --------------------------------
 --! \brief The entity of this module is basically equal to the
@@ -147,12 +161,11 @@ architecture Behavioral of OverflowCounter is
 
 begin
 
-	------------------------- SYNCHRONOUS PROCESS --------------------------------
-	------------------------ PROCESS DESCRIPTION ------------------------------
-	--! \vhdlflow [Overflow_Counter]
-	----------------------------------------------------------------------------------
+	------------------------- SYNCHRONOUS PROCESS ------------------------------
 
 	------------- Sampling the CNT ----------
+	--! \vhdlflow [Overflow_Counter]
+
 	OverflowCNT : process (clk, reset)
 	begin
 

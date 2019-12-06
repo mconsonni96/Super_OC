@@ -14,57 +14,77 @@
 -------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------
 
------------------------------------- DESCRIPTION ---------------------------------
-----------------------------------------------------------------------------------
---					Wrapper of Overflow Counter in Timestamp AXI4 Stream					--
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
 
-
----------- DEFAULT LIBRARY ---------
-library IEEE;
-	use IEEE.STD_LOGIC_1164.all;
-	use IEEE.NUMERIC_STD.ALL;
-	--use IEEE.MATH_REAL.all;
-
--- library STD;
-	-- 	use STD.textio.all;
-------------------------------------
-
-
----------- OTHERS LIBRARY ----------
-
--- library UNISIM;
--- 	use UNISIM.VComponents.all;
-
--- library xpm;
--- 	use xpm.vcomponents.all;
-
-
--- library work;
-
-------------------------------------
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
 --! \brief This is the wrapping of OverflowCounter for AXI4-Stream interface for IP-Core.
 --! \image html OverflowCounter_IP-Core.png  [IP-Core image]
----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+
+
+
+----------------------------- LIBRARY DECLARATION ------------------------------
+
+------------ IEEE LIBRARY -----------
+--! Standard IEEE library
+library IEEE;
+	--! Standard Logic Vector library
+	use IEEE.STD_LOGIC_1164.all;
+	--! Numeric library
+	use IEEE.NUMERIC_STD.ALL;
+--	--! Math operation over real number (not for implementattion)
+--	--use IEEE.MATH_REAL.all;
+------------------------------------
+
+-- ------------ STD LIBRARY -----------
+-- --! Standard
+-- library STD;
+-- 	--! Textual Input/Output (only in simulation)
+-- 	use STD.textio.all;
+-- ------------------------------------
+
+
+-- ---------- XILINX LIBRARY ----------
+-- --! Xilinx Unisim library
+-- library UNISIM;
+-- 	--! Xilinx Unisim VComponent library
+-- 	use UNISIM.VComponents.all;
+--
+-- --! \brief Xilinx Parametric Macro library
+-- --! \details To be correctly used in Vivado write auto_detect_xpm into tcl console.
+-- library xpm;
+-- 	--! Xilinx Parametric Macro VComponent library
+-- 	use xpm.vcomponents.all;
+-- ------------------------------------
+
+
+-- ------------ LOCAL LIBRARY ---------
+-- --! Project defined libary
+-- library work;
+-- ------------------------------------
+
+--------------------------------------------------------------------------------
+
+
+
+
+
 -----------------------------ENTITY DESCRIPTION --------------------------------
 --! \brief The entity of this module can be described by the following images:
 --! \details in the first one we see the Vivado representation of the Generic
 --! \image html OverflowCounter_Generic.png  [IP-Core Generic]
 --! \brief in the second image we see the Vivado representation of the IP-Core with the signals
 --! \image html OverflowCounter_Signals.png  [IP-Core Signals]
-----------------------------------------------------------------------------------
-
-
+--------------------------------------------------------------------------------
 
 entity AXI4Stream_OverflowCounter is
 
 	generic (
 
 		---------- Calibrated Timestamp Dimension ----
-    	BIT_FID				:	NATURAL							:=	1;			--! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
+		BIT_FID				:	NATURAL							:=	1;			--! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
 		BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;			--! Bit Dimension of the Coarse part of the Timestamp
 		BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16			--! Bit Dimension of the Fine part of the Timestamp
 		----------------------------------------------
@@ -104,13 +124,12 @@ end AXI4Stream_OverflowCounter;
 
 architecture Behavioral of AXI4Stream_OverflowCounter is
 
-	--------------------------- COMPONENT DESCRIPTION ------------------------------
-	--! \brief The AXI4Stream_OverflowCounterWrapper is basically the wrapper for the hdl
-	--------------------------------------------------------------------------------
 
 
-	--------------------- Components Declaration ---------------------
+	------------------------- COMPONENT DECLARATION ----------------------------
 
+	------------ AXI4Stream_OverflowCounterWrapper --------------
+	--! \brief The AXI4Stream_OverflowCounterWrapper is basically the wrapper for the HDL
 	COMPONENT AXI4Stream_OverflowCounterWrapper
 		generic (
 
@@ -144,22 +163,23 @@ architecture Behavioral of AXI4Stream_OverflowCounter is
 			-----------------------------------------------
 
 		);
-
-
 	END COMPONENT;
+	-------------------------------------------------------------
+
+
+	----------------------------------------------------------------------------
 
 
 begin
 
-	------------------- COMPONENT INSTANTITION DESCRIPTION ---------------------
+
+	------------------------ COMPONENT INSTANTIATION ---------------------------
+
+	------------ AXI4Stream_OverflowCounterWrapper --------------
 	--! Basically the AXI4Stream_OverflowCounter and the AXI4Stream_OverflowCounterWrapper have everything in common,
 	--! a part from the fact that the data of the first one have a length
 	--! that is a multiple of 8 in order to cope with the IP-Core requests
-	----------------------------------------------------------------------------
-	------------------ Components instantiation --------------------
 
-
-	-- AXI4Stream_OverflowCounterWrapper --
 	Inst_AXI4Stream_OverflowCounterWrapper : AXI4Stream_OverflowCounterWrapper
 		GENERIC MAP (
 
@@ -191,16 +211,19 @@ begin
 			m00_beltbus_tdata		=> m00_beltbus_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)
 			-----------------------------------------------
 		);
-	---------------------------------
+	-------------------------------------------------------------
+
+	----------------------------------------------------------------------------
 
 
-	------------------------------------------------------------------
 
-	------------------------------ DATA FLOW ------------------------------
-	----- Zero Padding of the AXI4-Stream ------
+
+
+	------------------------------- DATA FLOW ----------------------------------
+	------------ Zero Padding of the AXI4-Stream ----------------
 	m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION) <= (others => '0');		--! We put to '0' the bits that are not meaningful,
-	---------------------------------------------																		--! which are the bits that are needed just to reach the multiple of 8
-	----------------------------------------------------------------------
+	-------------------------------------------------------------																		--! which are the bits that are needed just to reach the multiple of 8
+	----------------------------------------------------------------------------
 
 
 end Behavioral;

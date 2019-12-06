@@ -15,43 +15,56 @@
 -------------------------------------------------------------------------------------------------------------------------
 
 
----------------------------------- DESCRIPTION -----------------------------------
-----------------------------------------------------------------------------------
---				  Simulation of AXI4Stream_OverflowCounter			     		--
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
-
-
-
----------- DEFAULT LIBRARY ---------
-library IEEE;
-	use IEEE.STD_LOGIC_1164.all;
-	use IEEE.NUMERIC_STD.ALL;
-	--use IEEE.MATH_REAL.all;
-
--- library STD;
-	-- 	use STD.textio.all;
-------------------------------------
-
-
----------- OTHERS LIBRARY ----------
-
--- library UNISIM;
--- 	use UNISIM.VComponents.all;
-
--- library xpm;
--- 	use xpm.vcomponents.all;
-
-
--- library work;
-
-------------------------------------
-
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
---! \brief This is the testbench of the OverflowCounter. In the following figure we see the result of the simulation
+--! \brief This is the HDL testbench of the OverflowCounter. In the following figure we see the result of the simulation
 --! \image html wave.png  [Waveform image]
----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+
+
+----------------------------- LIBRARY DECLARATION ------------------------------
+
+------------ IEEE LIBRARY -----------
+--! Standard IEEE library
+library IEEE;
+	--! Standard Logic Vector library
+	use IEEE.STD_LOGIC_1164.all;
+	--! Numeric library
+	use IEEE.NUMERIC_STD.ALL;
+--	--! Math operation over real number (not for implementattion)
+--	--use IEEE.MATH_REAL.all;
+------------------------------------
+
+-- ------------ STD LIBRARY -----------
+-- --! Standard
+-- library STD;
+-- 	--! Textual Input/Output (only in simulation)
+-- 	use STD.textio.all;
+-- ------------------------------------
+
+
+-- ---------- XILINX LIBRARY ----------
+-- --! Xilinx Unisim library
+-- library UNISIM;
+-- 	--! Xilinx Unisim VComponent library
+-- 	use UNISIM.VComponents.all;
+--
+-- --! \brief Xilinx Parametric Macro library
+-- --! \details To be correctly used in Vivado write auto_detect_xpm into tcl console.
+-- library xpm;
+-- 	--! Xilinx Parametric Macro VComponent library
+-- 	use xpm.vcomponents.all;
+-- ------------------------------------
+
+
+-- ------------ LOCAL LIBRARY ---------
+-- --! Project defined libary
+-- library work;
+-- ------------------------------------
+
+--------------------------------------------------------------------------------
+
 
 
 
@@ -71,22 +84,20 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 	--------------------------------------------
 
 
-	-------------- Calibrated Timestamp Dimension --------------
+	------ Calibrated Timestamp Dimension ------
 	constant BIT_FID             : NATURAL                         := 1;                --! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
 	constant BIT_COARSE          : NATURAL     RANGE   0   TO  32  := 8;				--! Bit Dimension of the Coarse part of the Timestamp
 	constant BIT_RESOLUTION      : POSITIVE    RANGE   1   TO  32  := 16;				--! Bit Dimension of the Fine part of the Timestamp
 	---------------------------------------------
 
-
-	----------------------------------------------
-
 	----------------------------------------------------------------------------
 
 
 
-	---------------------- COMPONENTS DECLARATION (DUT) -------------------------
+	---------------------- COMPONENTS DECLARATION (DUT) ------------------------
 
 	----- AXI4Stream_OverflowCounter -----
+	--! \brief The AXI4Stream_OverflowCounter is the Device Under Test
 	COMPONENT AXI4Stream_OverflowCounter
 		generic (
 
@@ -163,6 +174,7 @@ BEGIN
 
 
 	----- AXI4Stream_OverflowCounter -----
+	--! \brief Instantietion of the Device Under Test
 	dut_AXI4Stream_OverflowCounter	:	AXI4Stream_OverflowCounter
 		generic map(
 
@@ -201,10 +213,23 @@ BEGIN
 	-----------------------------------------------------------------------------
 
 
-	--------------------------------- PROCESS ----------------------------------
 
 
-	-- ------ Clock Process --------
+
+	-------------------------------- DATA FLOW ---------------------------------
+	------------- Clock Datat Flow ----------------
+	clk	<=	not	clk	after	 CLK_PERIOD/2;
+	-----------------------------------------------
+	-----------------------------------------------------------------------------
+
+
+
+
+
+	------------------------ PROCESS DESCRIPTION ------------------------------
+
+
+	-- --------------- Clock Process ------------------
 	-- clk_process :process
 	-- begin
 	-- 	clk <= '0';
@@ -212,14 +237,12 @@ BEGIN
 	-- 	clk <= '1';
 	-- 	wait for CLK_PERIOD/2;
 	-- end process;
-	-- ----------------------------
-	clk	<=	not	clk	after	 CLK_PERIOD/2;
+	-- -----------------------------------------------
 
 
-	------------------------ PROCESS DESCRIPTION ------------------------------
+	------------ Simulation Process ---------------
 	--! \vhdlflow [sim_process]
-	----------------------------------------------------------------------------------
-	----- Reset Process --------
+
 	sim_process :process
 	begin
 		reset <= '1';
@@ -250,7 +273,7 @@ BEGIN
 		wait;
 
 	end process;
-	----------------------------
+	-----------------------------------------------
 
 	----------------------------------------------------------------------------
 

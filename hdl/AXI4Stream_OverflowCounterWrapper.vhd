@@ -14,40 +14,55 @@
 -------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------
 
------------------------------------- DESCRIPTION ---------------------------------
-----------------------------------------------------------------------------------
---			Wrapper of Overflow Counter in Timestamp AXI4 Stream				--
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
-
-
----------- DEFAULT LIBRARY ---------
-library IEEE;
-	use IEEE.STD_LOGIC_1164.all;
-	use IEEE.NUMERIC_STD.ALL;
-	--use IEEE.MATH_REAL.all;
-
--- library STD;
-	-- 	use STD.textio.all;
-------------------------------------
-
-
----------- OTHERS LIBRARY ----------
-
--- library UNISIM;
--- 	use UNISIM.VComponents.all;
-
--- library xpm;
--- 	use xpm.vcomponents.all;
-
-
--- library work;
-
-------------------------------------
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
---! \brief This is the wrapping of OverflowCounter for AXI4-Stream interface for Hdl.
+--! \brief This is the wrapping of OverflowCounter for AXI4-Stream interface for HDL.
 ---------------------------------------------------------------------------------
+
+
+----------------------------- LIBRARY DECLARATION ------------------------------
+
+------------ IEEE LIBRARY -----------
+--! Standard IEEE library
+library IEEE;
+	--! Standard Logic Vector library
+	use IEEE.STD_LOGIC_1164.all;
+	--! Numeric library
+	use IEEE.NUMERIC_STD.ALL;
+--	-- ! Math operation over real number (not for implementattion)
+--	-- use IEEE.MATH_REAL.all;
+------------------------------------
+
+-- ------------ STD LIBRARY -----------
+-- --! Standard
+-- library STD;
+-- 	--! Textual Input/Output (only in simulation)
+-- 	use STD.textio.all;
+-- ------------------------------------
+
+
+-- ---------- XILINX LIBRARY ----------
+-- --! Xilinx Unisim library
+-- library UNISIM;
+-- 	--! Xilinx Unisim VComponent library
+-- 	use UNISIM.VComponents.all;
+--
+-- --! \brief Xilinx Parametric Macro library
+-- --! \details To be correctly used in Vivado write auto_detect_xpm into tcl console.
+-- library xpm;
+-- 	--! Xilinx Parametric Macro VComponent library
+-- 	use xpm.vcomponents.all;
+-- ------------------------------------
+
+
+-- ------------ LOCAL LIBRARY ---------
+-- --! Project defined libary
+-- library work;
+-- ------------------------------------
+
+--------------------------------------------------------------------------------
+
+
 
 -----------------------------ENTITY DESCRIPTION --------------------------------
 --! \brief The entity of this module is equal to the one of the top module, except for the fact
@@ -99,12 +114,11 @@ end AXI4Stream_OverflowCounterWrapper;
 
 architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 
-	--------------------------- COMPONENT DESCRIPTION ------------------------------
+
+	------------------------- COMPONENT DECLARATION ----------------------------
+
+	-------------------- OverflowCounter ------------------------
 	--! \brief The OverflowCounter basically counts the number of Overflow
-	--------------------------------------------------------------------------------
-
-	--------------------- Components Declaration ---------------------
-
 	COMPONENT OverflowCounter
 		generic (
 
@@ -140,18 +154,15 @@ architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 		);
 
 	END COMPONENT;
-
+	-------------------------------------------------------------
 
 begin
 
-	------------------- COMPONENT INSTANTITION DESCRIPTION ---------------------
+	------------------------ COMPONENT INSTANTIATION ---------------------------
+
+	-------------------- OverflowCounter -----------------------
 	--! \brief Basically the OverflowCounter sends the signals
 	--! that it generates to the AXI4Stream_OverflowCounterWrapper
-	----------------------------------------------------------------------------
-	------------------ Components instantiation --------------------
-
-
-	---------- OverflowCounter -----------
 	Inst_OverflowCounter : OverflowCounter
 		GENERIC MAP (
 
@@ -183,10 +194,10 @@ begin
 			beltbus_tdata		=> m00_beltbus_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)
 			-----------------------------------------------
 		);
-	---------------------------------
 
+	-------------------------------------------------------------
 
-	------------------------------------------------------------------
+	----------------------------------------------------------------------------
 
 
 
