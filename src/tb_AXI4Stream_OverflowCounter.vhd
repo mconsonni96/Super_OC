@@ -73,7 +73,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 	-------------- Calibrated Timestamp Dimension --------------
 	constant BIT_FID             : NATURAL                         := 1;                --! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
-	constant BIT_COARSE          : NATURAL     RANGE   0   TO  32  := 8;				--! BBit Dimension of the Coarse part of the Timestamp
+	constant BIT_COARSE          : NATURAL     RANGE   0   TO  32  := 8;				--! Bit Dimension of the Coarse part of the Timestamp
 	constant BIT_RESOLUTION      : POSITIVE    RANGE   1   TO  32  := 16;				--! Bit Dimension of the Fine part of the Timestamp
 	---------------------------------------------
 
