@@ -50,7 +50,7 @@ library IEEE;
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
 --! \brief This is the testbench of the OverflowCounter. In the following figure we see the result of the simulation
---! \image html wave.png  [IP-Core image]
+--! \image html wave.png  [Waveform image]
 ---------------------------------------------------------------------------------
 
 
