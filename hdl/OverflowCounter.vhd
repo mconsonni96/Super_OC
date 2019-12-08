@@ -17,7 +17,7 @@
 --------------------------BRIEF MODULE DESCRIPTION -----------------------------
 --! \file
 --! \brief This module counts the number of Overflow and sends it in output depending on the value of the FID.
----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 
 ----------------------------- LIBRARY DECLARATION ------------------------------
@@ -66,7 +66,7 @@ library IEEE;
 -----------------------------ENTITY DESCRIPTION --------------------------------
 --! \brief The entity of this module is basically equal to the
 --! one of the AXI4Stream_OverflowCounterWrapper
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 
 entity OverflowCounter is
@@ -115,7 +115,7 @@ end OverflowCounter;
 --! otherwise if you have an Overflow (*fid = 0*) the *CoarseOverflow_cnt* is increased by one and the output contains the *fid* & *CoarseOverflow_cnt*.
 --! In the following figure we can see the concept just explained
 --! \image html InputOutput.svg
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 architecture Behavioral of OverflowCounter is
 

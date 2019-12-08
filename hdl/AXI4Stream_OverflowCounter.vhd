@@ -120,7 +120,7 @@ end AXI4Stream_OverflowCounter;
 --! The module instantiates the *AXI4Stream_OverflowCounterWrapper*, set to '0' the MSBs of the output data
 --! (*m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION)*)
 --! and rename the input and output interfaces with AXI4-Stream, input as slave and output as master.
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 architecture Behavioral of AXI4Stream_OverflowCounter is
 

@@ -67,7 +67,7 @@ library IEEE;
 -----------------------------ENTITY DESCRIPTION --------------------------------
 --! \brief The entity of this module is equal to the one of the top module, except for the fact
 --! that here we have the bit length of the data that are not necessarily a multiple of 8
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 
 
@@ -109,8 +109,8 @@ entity AXI4Stream_OverflowCounterWrapper is
 end AXI4Stream_OverflowCounterWrapper;
 
 ------------------------ ARCHITECTURE DESCRIPTION ------------------------------
---! \brief The AXI4Stream_OverflowCounterWrapper is basically the wrapper for the hdl
-----------------------------------------------------------------------------------
+--! \brief The AXI4Stream_OverflowCounterWrapper is basically the wrapper for the HDL
+--------------------------------------------------------------------------------
 
 architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 
