@@ -22,7 +22,7 @@ set_property name $name [ipx::current_core]
 set version "1.0"
 set_property version $version [ipx::current_core]
 
-set display_name "AXI4-Stream OverflowCounter"
+set display_name "AXI4-Stream Overflow Counter"
 set_property display_name $display_name [ipx::current_core]
 
 set description "OverflowCounter of the TDC"

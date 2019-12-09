@@ -377,7 +377,7 @@
       <xilinx:taxonomies>
         <xilinx:taxonomy>/TDC_Basic_IPs</xilinx:taxonomy>
       </xilinx:taxonomies>
-      <xilinx:displayName>AXI4-Stream OverflowCounter</xilinx:displayName>
+      <xilinx:displayName>AXI4-Stream Overflow Counter</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:vendorDisplayName>DigiLAB</xilinx:vendorDisplayName>
       <xilinx:vendorURL>https://bitbucket.org/TimeEngineers/oveflowcounter/src/master/</xilinx:vendorURL>
@@ -386,7 +386,7 @@
         <xilinx:canUpgradeFrom>xilinx.com:user:AXI4Stream_OverflowCounter:1.0</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>DigiLAB:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2019-12-09T11:17:21Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2019-12-09T11:20:49Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="nopcore"/>
         <xilinx:tag xilinx:name="xilinx.com:user:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">d:/Xilinx_bis/Utility_Ip_Core/ip_repo/overflowcounter_ip</xilinx:tag>
