@@ -3,9 +3,9 @@
 #set path [pwd]
 #regsub -all {(.)/logs} $path {\1} path
 
-#append path "/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/calibrator/package_ip"
+#append path "/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter/package_ip"
 
-set path "/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter"
+set path "/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter/package_ip"
 # ==============================================================================
 
 
