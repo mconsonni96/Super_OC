@@ -128,6 +128,34 @@ proc set_param_string_list {param list default enablement editable dependency to
 
 
 
+# ----------------------- Text Type (String) -----------------------------------
+proc set_param_string_text {param default enablement editable dependency tooltip display_name} \
+{
+	# Name of the Parameter
+	set_property widget {textBox} [ipgui::get_guiparamspec -name $param -component [ipx::current_core] ]
+
+	# Set Type
+	set_property value_format string [ipx::get_user_parameters $param -of_objects [ipx::current_core]]
+
+
+	# Set Default
+	set_property value $default [ipx::get_hdl_parameters $param -of_objects [ipx::current_core]]
+	set_property value $default [ipx::get_user_parameters $param -of_objects [ipx::current_core]]
+
+	# Editable
+	set_property enablement_value $enablement [ipx::get_user_parameters $param -of_objects [ipx::current_core]]
+	set_property enablement_tcl_expr $editable [ipx::get_user_parameters $param -of_objects [ipx::current_core]]
+
+	# Dependency
+	set_property value_tcl_expr $dependency [ipx::get_user_parameters $param -of_objects [ipx::current_core]]
+
+	# Set Tooltip
+	set_property tooltip $tooltip [ipgui::get_guiparamspec -name $param -component [ipx::current_core] ]
+
+	# Set Displayed Name
+	set_property display_name $display_name [ipgui::get_guiparamspec -name $param -component [ipx::current_core] ]
+}
+# ------------------------------------------------------------------------------
 
 
 # ==============================================================================
