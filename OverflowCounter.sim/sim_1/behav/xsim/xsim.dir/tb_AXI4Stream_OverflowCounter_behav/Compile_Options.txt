@@ -1,1 +1,0 @@
--wto "cdfef8052e8b438280848ba8528c2fb0" --incr --debug "typical" --relax --mt "8" -L "xil_defaultlib" -L "secureip" --snapshot "tb_AXI4Stream_OverflowCounter_behav" "xil_defaultlib.tb_AXI4Stream_OverflowCounter" -log "elaborate.log" 
