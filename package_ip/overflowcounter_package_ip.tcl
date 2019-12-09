@@ -5,13 +5,12 @@
 
 #append path "/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/calibrator/package_ip"
 
-# set path "/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/synchronizer"
-set path "D:/Xilinx_bis/Utility_Ip_Core/ip_repo/overflowcounter_ip/package_ip"
+set path "/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/overflo-counter"
 # ==============================================================================
 
 
 # ============================ Identification ==================================
-set vendor "DigiLAB"
+set vendor "TEDIEL"
 set_property vendor $vendor [ipx::current_core]
 
 set library "TDC_Basic_IPs"
