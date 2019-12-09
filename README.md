@@ -49,7 +49,7 @@ We can find in *hdl/* the following module directory:
  - **OverflowCounter**: Count the number of Overflow in the input data(*s00_timestamp_tdata*).
 
 # Simulation
-We can find in  *scr/* the following module directory:
+We can find in  *src/* the following module directory:
 
  - **tb_AXI4Stream_OverflowCounter**: HDL simulation of *AXI4Stream_OverflowCounter*.
  - **tb_AXI4Stream_OverflowCounter_behav**: Waveform of *tb_AXI4Stream_OverflowCounter*.
