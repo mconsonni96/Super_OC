@@ -5,7 +5,7 @@
 
 #append path "/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/calibrator/package_ip"
 
-set path "/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/overflo-counter"
+set path "/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter"
 # ==============================================================================
 
 
