@@ -12,7 +12,7 @@ If *BIT_FID /= 0* and *timestamp_tvalid = '1'*, the output corresponds exactly t
 
 
 # IP-Core
-Wrapping of OverflowCounter for AXI4-Stream interface for IP-Core.
+OverflowCounter for AXI4-Stream interface IP-Core.
 
 ![IP-Core Image](doc/img/OverflowCounter_IP-Core.png)
 
