@@ -1,14 +1,4 @@
 
-# =========================== SET PATH =========================================
-#set path [pwd]
-#regsub -all {(.)/logs} $path {\1} path
-
-#append path "/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter/package_ip"
-
-set path "/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter/package_ip"
-# ==============================================================================
-
-
 # ============================ Identification ==================================
 set vendor "TEDIEL"
 set_property vendor $vendor [ipx::current_core]
@@ -38,20 +28,18 @@ set taxonomy {/TDC_Basic_IPs}
 set_property taxonomy $taxonomy [ipx::current_core]
 # ==============================================================================
 
-
-
 # ========================== Import TCL Functions ==============================
-set set_param_fx $path
-append set_param_fx "/ip_customization_parameters/set_param_fx.tcl"
-source $set_param_fx -notrace
+set path [pwd]
+regsub -all {(.)/logs} $path {\1} path
+append path "/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter/package_ip"
 # ==============================================================================
 
 # ====================== SET IP CUSTOMIZATION PARAMIETR ========================
-set overflowcounter_param_path [file join $path "ip_customization_parameters"]
-#append overflowcounter_param_path "/ip_customization_parameters/"
+set param_path $path
+append param_path "/ip_customization_parameters/"
+source [join [list $param_path "set_param_fx.tcl"] ""] -notrace
 
-source [file join $overflowcounter_param_path "set_bit_coarse.tcl"] -notrace
-source [file join $overflowcounter_param_path "set_bit_fid.tcl"] -notrace
-source [file join $overflowcounter_param_path "set_bit_resolution.tcl"] -notrace
-
+source [join [list $param_path "set_bit_coarse.tcl"] ""] -notrace
+source [join [list $param_path "set_bit_fid.tcl"] ""] -notrace
+source [join [list $param_path "set_bit_resolution.tcl"] ""] -notrace
 # ==============================================================================
