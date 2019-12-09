@@ -121,8 +121,8 @@ architecture Behavioral of OverflowCounter is
 
 	------------------------- CONSTANTS DECLARATION ----------------------------
 
-	------- Coarse Counter OverFlow Manage -------
-	constant	BIT_OVERFLOW_CNT	:	POSITIVE	:=	BIT_COARSE + BIT_RESOLUTION;							--! Coarse Counter OverFlow Manage
+	----- Coarse Counter OverFlow Dimension -----
+	constant	BIT_OVERFLOW_CNT	:	POSITIVE	:=	BIT_COARSE + BIT_RESOLUTION;							--! Coarse Counter OverFlow Dimension
 	----------------------------------------------
 
 	----------- FID of the BeltBus --------------
@@ -154,7 +154,7 @@ architecture Behavioral of OverflowCounter is
 
 
 	-------------------------- SIGNALS DECLARATION -----------------------------
-	------- Coarse Counter OverFlow Manage -------
+	---------- Coarse Counter OverFlow  ----------
 	signal	CoarseOverflow_cnt	:	UNSIGNED(BIT_OVERFLOW_CNT-1 downto 0);										--! Overflow Counter
 	----------------------------------------------
 	----------------------------------------------------------------------------
