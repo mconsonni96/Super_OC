@@ -103,13 +103,13 @@ entity AXI4Stream_OverflowCounter is
 		----------------------------------------------
 
 		--------------- Timestamp Input ---------------
-		s00_timestamp_tvalid	:	IN	STD_LOGIC;																                --! Valid Timestamp
-		s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);   	--! Timestamp FID + COARSE + RESOLUTION
+		s00_axis_timestamp_tvalid	:	IN	STD_LOGIC;																                --! Valid Timestamp
+		s00_axis_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);   	--! Timestamp FID + COARSE + RESOLUTION
 		-----------------------------------------------
 
 		--------------- BeltBus Output ----------------
-		m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																                --! Valid Belt Bus
-		m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 		--! Belt Bus
+		m00_axis_beltbus_tvalid	   :	OUT	STD_LOGIC;																                --! Valid Belt Bus
+		m00_axis_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 		--! Belt Bus
 		-----------------------------------------------
 
 	);
@@ -118,7 +118,7 @@ end AXI4Stream_OverflowCounter;
 
 ------------------------ ARCHITECTURE DESCRIPTION ------------------------------
 --! The module instantiates the *AXI4Stream_OverflowCounterWrapper*, set to '0' the MSBs of the output data
---! (*m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION)*)
+--! (*m00_axis_beltbus_tdata(m00_axis_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION)*)
 --! and rename the input and output interfaces with AXI4-Stream, input as slave and output as master.
 --------------------------------------------------------------------------------
 
@@ -153,13 +153,13 @@ architecture Behavioral of AXI4Stream_OverflowCounter is
 			----------------------------------------------
 
 			--------------- Timestamp Input ---------------
-			s00_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
-			s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					-- Timestamp FID + COARSE + RESOLUTION
+			s00_axis_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
+			s00_axis_timestamp_tdata	:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					-- Timestamp FID + COARSE + RESOLUTION
 			-----------------------------------------------
 
 			--------------- BeltBus Output ----------------
-			m00_beltbus_tvalid	   :	OUT	STD_LOGIC;																                -- Valid Belt Bus
-			m00_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 						-- Belt Bus
+			m00_axis_beltbus_tvalid	   :	OUT	STD_LOGIC;																                -- Valid Belt Bus
+			m00_axis_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 						-- Belt Bus
 			-----------------------------------------------
 
 		);
@@ -202,13 +202,13 @@ begin
 			--------------------
 
 			--------------- Timestamp Input ---------------
-			s00_timestamp_tvalid	=> s00_timestamp_tvalid,
-			s00_timestamp_tdata		=> s00_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0),
+			s00_axis_timestamp_tvalid	=> s00_axis_timestamp_tvalid,
+			s00_axis_timestamp_tdata		=> s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0),
 			-----------------------------------------------
 
 			--------------- BeltBus Output ----------------
-			m00_beltbus_tvalid	    => m00_beltbus_tvalid,
-			m00_beltbus_tdata		=> m00_beltbus_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)
+			m00_axis_beltbus_tvalid	    => m00_axis_beltbus_tvalid,
+			m00_axis_beltbus_tdata		=> m00_axis_beltbus_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)
 			-----------------------------------------------
 		);
 	-------------------------------------------------------------
@@ -221,7 +221,7 @@ begin
 
 	------------------------------- DATA FLOW ----------------------------------
 	------------ Zero Padding of the AXI4-Stream ----------------
-	m00_beltbus_tdata(m00_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION) <= (others => '0');		--! We put to '0' the bits that are not meaningful,
+	m00_axis_beltbus_tdata(m00_axis_beltbus_tdata'LENGTH-1 downto BIT_FID + BIT_COARSE + BIT_RESOLUTION) <= (others => '0');		--! We put to '0' the bits that are not meaningful,
 	-------------------------------------------------------------																		--! which are the bits that are needed just to reach the multiple of 8
 	----------------------------------------------------------------------------
 

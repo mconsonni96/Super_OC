@@ -6,49 +6,49 @@
   <spirit:version>1.0</spirit:version>
   <spirit:busInterfaces>
     <spirit:busInterface>
-      <spirit:name>m00_beltbus</spirit:name>
+      <spirit:name>M00_AXIS_beltbus</spirit:name>
       <spirit:busType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="axis" spirit:version="1.0"/>
       <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="axis_rtl" spirit:version="1.0"/>
       <spirit:master/>
       <spirit:portMaps>
         <spirit:portMap>
           <spirit:logicalPort>
-            <spirit:name>TDATA</spirit:name>
+            <spirit:name>TVALID</spirit:name>
           </spirit:logicalPort>
           <spirit:physicalPort>
-            <spirit:name>m00_beltbus_tdata</spirit:name>
+            <spirit:name>m00_axis_beltbus_tvalid</spirit:name>
           </spirit:physicalPort>
         </spirit:portMap>
         <spirit:portMap>
           <spirit:logicalPort>
-            <spirit:name>TVALID</spirit:name>
+            <spirit:name>TDATA</spirit:name>
           </spirit:logicalPort>
           <spirit:physicalPort>
-            <spirit:name>m00_beltbus_tvalid</spirit:name>
+            <spirit:name>m00_axis_beltbus_tdata</spirit:name>
           </spirit:physicalPort>
         </spirit:portMap>
       </spirit:portMaps>
     </spirit:busInterface>
     <spirit:busInterface>
-      <spirit:name>s00_timestamp</spirit:name>
+      <spirit:name>S00_AXIS_timestamp</spirit:name>
       <spirit:busType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="axis" spirit:version="1.0"/>
       <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="axis_rtl" spirit:version="1.0"/>
       <spirit:slave/>
       <spirit:portMaps>
         <spirit:portMap>
           <spirit:logicalPort>
-            <spirit:name>TDATA</spirit:name>
+            <spirit:name>TVALID</spirit:name>
           </spirit:logicalPort>
           <spirit:physicalPort>
-            <spirit:name>s00_timestamp_tdata</spirit:name>
+            <spirit:name>s00_axis_timestamp_tvalid</spirit:name>
           </spirit:physicalPort>
         </spirit:portMap>
         <spirit:portMap>
           <spirit:logicalPort>
-            <spirit:name>TVALID</spirit:name>
+            <spirit:name>TDATA</spirit:name>
           </spirit:logicalPort>
           <spirit:physicalPort>
-            <spirit:name>s00_timestamp_tvalid</spirit:name>
+            <spirit:name>s00_axis_timestamp_tdata</spirit:name>
           </spirit:physicalPort>
         </spirit:portMap>
       </spirit:portMaps>
@@ -93,7 +93,7 @@
       <spirit:parameters>
         <spirit:parameter>
           <spirit:name>ASSOCIATED_BUSIF</spirit:name>
-          <spirit:value spirit:id="BUSIFPARAM_VALUE.CLK.ASSOCIATED_BUSIF">m00_beltbus:s00_timestamp</spirit:value>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.CLK.ASSOCIATED_BUSIF">M00_AXIS_beltbus:S00_AXIS_timestamp</spirit:value>
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>ASSOCIATED_RESET</spirit:name>
@@ -116,7 +116,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>d519dfb8</spirit:value>
+            <spirit:value>74571d14</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -132,7 +132,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>d519dfb8</spirit:value>
+            <spirit:value>fc40483b</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -194,7 +194,7 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>s00_timestamp_tvalid</spirit:name>
+        <spirit:name>s00_axis_timestamp_tvalid</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
@@ -207,7 +207,7 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>s00_timestamp_tdata</spirit:name>
+        <spirit:name>s00_axis_timestamp_tdata</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
@@ -221,13 +221,10 @@
               <spirit:viewNameRef>xilinx_anylanguagebehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
-          <spirit:driver>
-            <spirit:defaultValue spirit:format="long">0</spirit:defaultValue>
-          </spirit:driver>
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>m00_beltbus_tvalid</spirit:name>
+        <spirit:name>m00_axis_beltbus_tvalid</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
@@ -240,7 +237,7 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>m00_beltbus_tdata</spirit:name>
+        <spirit:name>m00_axis_beltbus_tdata</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
@@ -261,7 +258,7 @@
       <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
         <spirit:name>BIT_FID</spirit:name>
         <spirit:displayName>Bit Fid</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.BIT_FID" spirit:minimum="0" spirit:rangeType="long">2</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.BIT_FID" spirit:minimum="0" spirit:rangeType="long">1</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>BIT_COARSE</spirit:name>
@@ -279,6 +276,13 @@
     <spirit:fileSet>
       <spirit:name>xilinx_anylanguagesynthesis_view_fileset</spirit:name>
       <spirit:file>
+        <spirit:name>src/timing_ooc.xdc</spirit:name>
+        <spirit:userFileType>xdc</spirit:userFileType>
+        <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
+        <spirit:userFileType>USED_IN_out_of_context</spirit:userFileType>
+        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/AXI4Stream_OverflowCounterWrapper.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
@@ -289,7 +293,7 @@
       <spirit:file>
         <spirit:name>hdl/AXI4Stream_OverflowCounter.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_0b362db1</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_7917e115</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -333,7 +337,7 @@
     <spirit:parameter>
       <spirit:name>BIT_FID</spirit:name>
       <spirit:displayName>Bit FID</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.BIT_FID" spirit:minimum="0" spirit:maximum="4" spirit:rangeType="long">2</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.BIT_FID" spirit:minimum="0" spirit:maximum="4" spirit:rangeType="long">1</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>BIT_COARSE</spirit:name>
@@ -375,7 +379,7 @@
         <xilinx:family xilinx:lifeCycle="Production">kintexu</xilinx:family>
       </xilinx:supportedFamilies>
       <xilinx:taxonomies>
-        <xilinx:taxonomy>/TDC_Basic_IPs</xilinx:taxonomy>
+        <xilinx:taxonomy>/TDC_Basic</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>AXI4-Stream Overflow Counter</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
@@ -386,22 +390,22 @@
         <xilinx:canUpgradeFrom>xilinx.com:user:AXI4Stream_OverflowCounter:1.0</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>DigiLAB:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2019-12-09T13:43:02Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2020-03-04T07:51:58Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="nopcore"/>
         <xilinx:tag xilinx:name="xilinx.com:user:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">d:/Xilinx_bis/Utility_Ip_Core/ip_repo/overflowcounter_ip</xilinx:tag>
         <xilinx:tag xilinx:name="DigiLAB:user:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">d:/Xilinx_bis/Utility_Ip_Core/ip_repo/overflowcounter_ip</xilinx:tag>
         <xilinx:tag xilinx:name="DigiLAB:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/overflow-counter</xilinx:tag>
-        <xilinx:tag xilinx:name="TEDIEL:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter</xilinx:tag>
+        <xilinx:tag xilinx:name="TEDIEL:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream_overflowcounter</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2017.3</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="f7eb07e8"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="2c2334ee"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="60587c27"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="6fa17924"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="51a2b681"/>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="2425a5eb"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="1f1db876"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="5a3874c7"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="0fdcc890"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="c4ce5e53"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

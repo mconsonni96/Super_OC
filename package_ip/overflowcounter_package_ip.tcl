@@ -24,7 +24,7 @@ set_property vendor_display_name $vendor_display_name [ipx::current_core]
 set company_url {https://bitbucket.org/TimeEngineers/oveflowcounter/src/master/}
 set_property company_url $company_url [ipx::current_core]
 
-set taxonomy {/TDC_Basic_IPs}
+set taxonomy {/TDC_Basic}
 set_property taxonomy $taxonomy [ipx::current_core]
 # ==============================================================================
 
