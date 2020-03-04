@@ -121,13 +121,13 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 		    ----------------------------------------------
 
 		    --------------- Timestamp Input ---------------
-			s00_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
-			s00_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
+			s00_axis_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
+			s00_axis_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
 		    -----------------------------------------------
 
 		    ------------ BeltBus Output --------------
-			m00_beltbus_tvalid	:	OUT	STD_LOGIC;																	                -- Valid Belt Bus
-			m00_beltbus_tdata	:	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 			-- Belt Bus
+			m00_axis_beltbus_tvalid	:	OUT	STD_LOGIC;																	                -- Valid Belt Bus
+			m00_axis_beltbus_tdata	:	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 			-- Belt Bus
 		    -------------------------------------------
 
 		);
@@ -153,13 +153,13 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 
 	-------------------- Timestamp Input ------------------
-	signal	s00_timestamp_tvalid	:  STD_LOGIC;																				 --! Valid Timestamp
-	signal	s00_timestamp_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp FID + COARSE + RESOLUTION
+	signal	s00_axis_timestamp_tvalid	:  STD_LOGIC;																				 --! Valid Timestamp
+	signal	s00_axis_timestamp_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp FID + COARSE + RESOLUTION
 	-------------------------------------------------------
 
 	-------------------- BeltBus Output -----------------
-	signal	m00_beltbus_tvalid   	:  STD_LOGIC;																				 --! Valid Belt Bus
-	signal	m00_beltbus_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Belt Bus
+	signal	m00_axis_beltbus_tvalid   	:  STD_LOGIC;																				 --! Valid Belt Bus
+	signal	m00_axis_beltbus_tdata	    :  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Belt Bus
 	-----------------------------------------------------
 
 	----------------------------------------------------------------------------
@@ -197,13 +197,13 @@ BEGIN
 
 
 			--------------- Timestamp Input --------------
-			s00_timestamp_tvalid	=>	s00_timestamp_tvalid,
-			s00_timestamp_tdata	    =>	s00_timestamp_tdata,
+			s00_axis_timestamp_tvalid	=>	s00_axis_timestamp_tvalid,
+			s00_axis_timestamp_tdata	    =>	s00_axis_timestamp_tdata,
 			----------------------------------------------
 
 			----------------- BeltBus Output -------------
-			m00_beltbus_tvalid  	=>	m00_beltbus_tvalid,
-			m00_beltbus_tdata   	=>	m00_beltbus_tdata
+			m00_axis_beltbus_tvalid  	=>	m00_axis_beltbus_tvalid,
+			m00_axis_beltbus_tdata   	=>	m00_axis_beltbus_tdata
 			----------------------------------------------
 
 		);
@@ -253,18 +253,18 @@ BEGIN
 
 		for i in 0 to 10 loop
 
-			s00_timestamp_tvalid	<= '1';
-			s00_timestamp_tdata	    <= std_logic_vector(to_unsigned(i,s00_timestamp_tdata'LENGTH));                                                         -- Simulation with FID = 0 (Overflow)
+			s00_axis_timestamp_tvalid	<= '1';
+			s00_axis_timestamp_tdata	    <= std_logic_vector(to_unsigned(i,s00_axis_timestamp_tdata'LENGTH));                                                         -- Simulation with FID = 0 (Overflow)
 			wait for CLK_PERIOD;
 
-			s00_timestamp_tvalid	<= '0';
+			s00_axis_timestamp_tvalid	<= '0';
 			wait for VALID_WAIT-CLK_PERIOD;
 
-			s00_timestamp_tvalid    <= '1';
-			s00_timestamp_tdata     <= std_logic_vector(to_unsigned(1,BIT_FID)) & std_logic_vector(to_unsigned(i,s00_timestamp_tdata'LENGTH - BIT_FID));    -- Simulation with FID = 1 (Measure)
+			s00_axis_timestamp_tvalid    <= '1';
+			s00_axis_timestamp_tdata     <= std_logic_vector(to_unsigned(1,BIT_FID)) & std_logic_vector(to_unsigned(i,s00_axis_timestamp_tdata'LENGTH - BIT_FID));    -- Simulation with FID = 1 (Measure)
 			wait for CLK_PERIOD;
 
-			s00_timestamp_tvalid    <= '0';
+			s00_axis_timestamp_tvalid    <= '0';
 			wait for VALID_WAIT-CLK_PERIOD;
 
 		end loop;
