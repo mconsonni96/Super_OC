@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spirit:component xmlns:xilinx="http://www.xilinx.com" xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <spirit:vendor>TEDIEL</spirit:vendor>
+  <spirit:vendor>DigiLAB</spirit:vendor>
   <spirit:library>user</spirit:library>
   <spirit:name>AXI4Stream_OverflowCounter</spirit:name>
   <spirit:version>1.1</spirit:version>
@@ -391,8 +391,9 @@
         <xilinx:canUpgradeFrom>DigiLAB:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>TEDIEL:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>TEDIEL:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.1</xilinx:canUpgradeFrom>
+        <xilinx:canUpgradeFrom>TEDIEL:user:AXI4Stream_OverflowCounter:1.1</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2020-03-04T07:56:01Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2020-03-04T13:17:12Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="nopcore"/>
         <xilinx:tag xilinx:name="xilinx.com:user:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">d:/Xilinx_bis/Utility_Ip_Core/ip_repo/overflowcounter_ip</xilinx:tag>
@@ -400,7 +401,8 @@
         <xilinx:tag xilinx:name="DigiLAB:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/overflow-counter</xilinx:tag>
         <xilinx:tag xilinx:name="TEDIEL:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream_overflowcounter</xilinx:tag>
         <xilinx:tag xilinx:name="TEDIEL:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.1_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream_overflowcounter</xilinx:tag>
-        <xilinx:tag xilinx:name="TEDIEL:user:AXI4Stream_OverflowCounter:1.1_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream_overflowcounter</xilinx:tag>
+        <xilinx:tag xilinx:name="TEDIEL:user:AXI4Stream_OverflowCounter:1.1_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="DigiLAB:user:AXI4Stream_OverflowCounter:1.1_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Utility_Ip_Core/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

@@ -1,6 +1,6 @@
 
 # ============================ Identification ==================================
-set vendor "TEDIEL"
+set vendor "DigiLAB"
 set_property vendor $vendor [ipx::current_core]
 
 set library "user"
