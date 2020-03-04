@@ -3,19 +3,19 @@
 set vendor "TEDIEL"
 set_property vendor $vendor [ipx::current_core]
 
-set library "TDC_Basic_IPs"
+set library "user"
 set_property library $library [ipx::current_core]
 
 set name "AXI4Stream_OverflowCounter"
 set_property name $name [ipx::current_core]
 
-set version "1.0"
+set version "1.1"
 set_property version $version [ipx::current_core]
 
 set display_name "AXI4-Stream Overflow Counter"
 set_property display_name $display_name [ipx::current_core]
 
-set description "OverflowCounter of the TDC"
+set description "Belt Bus Overflow Counter of the TDC"
 set_property description $description [ipx::current_core]
 
 set vendor_display_name "DigiLAB"
