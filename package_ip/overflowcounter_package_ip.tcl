@@ -1,4 +1,7 @@
 
+# =========================== SET PATH =========================================
+set path "D:/Xilinx_bis/Utility_Ip_Core/ip_repo/axi4stream_overflowcounter/package_ip"
+
 # ============================ Identification ==================================
 set vendor "DigiLAB"
 set_property vendor $vendor [ipx::current_core]
@@ -9,7 +12,7 @@ set_property library $library [ipx::current_core]
 set name "AXI4Stream_OverflowCounter"
 set_property name $name [ipx::current_core]
 
-set version "1.1"
+set version "1.2"
 set_property version $version [ipx::current_core]
 
 set display_name "AXI4-Stream Overflow Counter"
@@ -29,9 +32,9 @@ set_property taxonomy $taxonomy [ipx::current_core]
 # ==============================================================================
 
 # ========================== Import TCL Functions ==============================
-set path [pwd]
-regsub -all {(.)/logs} $path {\1} path
-append path "/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter/package_ip"
+#set path [pwd]
+#regsub -all {(.)/logs} $path {\1} path
+#append path "/Utility_Ip_Core/ip_repo/TDC_Basic_IPs/axi4-stream-overflow-counter/package_ip"
 # ==============================================================================
 
 # ====================== SET IP CUSTOMIZATION PARAMIETR ========================
