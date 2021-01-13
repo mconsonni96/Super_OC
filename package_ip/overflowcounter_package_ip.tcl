@@ -6,13 +6,13 @@ set path "D:/Xilinx_bis/Utility_Ip_Core/ip_repo/axi4stream_overflowcounter/packa
 set vendor "DigiLAB"
 set_property vendor $vendor [ipx::current_core]
 
-set library "user"
+set library "ip"
 set_property library $library [ipx::current_core]
 
 set name "AXI4Stream_OverflowCounter"
 set_property name $name [ipx::current_core]
 
-set version "1.2"
+set version "1.3"
 set_property version $version [ipx::current_core]
 
 set display_name "AXI4-Stream Overflow Counter"

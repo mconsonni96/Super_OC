@@ -1,5 +1,5 @@
 # AXI4Stream_OverflowCounter
-This is a Vivado 2017.3 Project, used to counting the number of Overflow which occur in the timestamps coming from the TDC.
+This is a Vivado Project, used to counting the number of Overflow which occur in the timestamps coming from the TDC.
 The input of the OverflowCounter is a AXI4-Stream interface consisting of a Valid and a Data channel, *s00_timestamp_tvalid* and *s00_timestamp_tdata*.
 The output depends on the value of the most significant bits(*FID*) of the input.
 The timestamps in output of the OverflowCounter is an AXI4 Stream interface.
