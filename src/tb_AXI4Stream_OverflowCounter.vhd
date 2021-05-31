@@ -266,14 +266,15 @@ BEGIN
 		for i in 0 to 10 loop
 
 			s00_axis_timestamp_tvalid	<= '1';
-			s00_axis_timestamp_tdata	    <= std_logic_vector(to_unsigned(i,s00_axis_timestamp_tdata'LENGTH));                                                         -- Simulation with FID = 0 (Overflow)
+			s00_axis_timestamp_tdata  										<= (Others => '0');
+			s00_axis_timestamp_tdata(BIT_COARSE+BIT_RESOLUTION-1 downto 0)	<= std_logic_vector(to_unsigned(i,BIT_COARSE+BIT_RESOLUTION));                 -- Simulation with FID = 0 (Overflow)
 			wait for CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid	<= '0';
 			wait for VALID_WAIT-CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid    <= '1';
-			s00_axis_timestamp_tdata     <= std_logic_vector(to_unsigned(1,BIT_FID)) & std_logic_vector(to_unsigned(i,s00_axis_timestamp_tdata'LENGTH - BIT_FID));    -- Simulation with FID = 1 (Measure)
+			s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE+BIT_RESOLUTION-1 downto BIT_COARSE+BIT_RESOLUTION)     <= std_logic_vector(to_unsigned(1,BIT_FID));    -- Simulation with FID = 1 (Measure)
 			wait for CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid    <= '0';
