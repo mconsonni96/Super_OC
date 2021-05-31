@@ -162,7 +162,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 	-------------------------------------------------------
 
 	-------------- Calibrated Input ---------------
-	signal	IsCalibrated				:	STD_LOGIC	:=	'1';																	--! Is '1' if the s00_axis_timestamp is calibrated.
+	signal	IsCalibrated				:	STD_LOGIC	:=	'0';																	--! Is '1' if the s00_axis_timestamp is calibrated.
 	-----------------------------------------------
 
 	-------------------- BeltBus Output -----------------
@@ -263,7 +263,31 @@ BEGIN
 		reset <= '0';
 		wait for RESET_WAIT;
 
-		for i in 0 to 10 loop
+		for i in 0 to 4 loop
+
+			IsCalibrated	<=	'0';
+
+			s00_axis_timestamp_tvalid	<= '1';
+			s00_axis_timestamp_tdata  										<= (Others => '0');
+			s00_axis_timestamp_tdata(BIT_COARSE+BIT_RESOLUTION-1 downto 0)	<= std_logic_vector(to_unsigned(i,BIT_COARSE+BIT_RESOLUTION));                 -- Simulation with FID = 0 (Overflow)
+			wait for CLK_PERIOD;
+
+			s00_axis_timestamp_tvalid	<= '0';
+			wait for VALID_WAIT-CLK_PERIOD;
+
+			s00_axis_timestamp_tvalid    <= '1';
+			s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE+BIT_RESOLUTION-1 downto BIT_COARSE+BIT_RESOLUTION)     <= std_logic_vector(to_unsigned(1,BIT_FID));    -- Simulation with FID = 1 (Measure)
+			wait for CLK_PERIOD;
+
+			s00_axis_timestamp_tvalid    <= '0';
+			wait for VALID_WAIT-CLK_PERIOD;
+
+		end loop;
+
+
+		for i in 5 to 9 loop
+
+			IsCalibrated	<=	'1';
 
 			s00_axis_timestamp_tvalid	<= '1';
 			s00_axis_timestamp_tdata  										<= (Others => '0');
