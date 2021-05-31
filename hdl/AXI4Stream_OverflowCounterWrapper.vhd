@@ -99,6 +99,10 @@ entity AXI4Stream_OverflowCounterWrapper is
 		s00_axis_timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					--! Timestamp FID + COARSE + RESOLUTION
 		-----------------------------------------------
 
+		-------------- Calibrated Input ---------------
+		IsCalibrated		:	IN	STD_LOGIC;																						--! Is '1' if the s00_axis_timestamp is calibrated.
+		-----------------------------------------------
+
 		--------------- BeltBus Output ----------------
 		m00_axis_beltbus_tvalid	   :	OUT	STD_LOGIC;																                --! Valid Belt Bus
 		m00_axis_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 						--! Belt Bus
@@ -146,6 +150,10 @@ architecture Behavioral of AXI4Stream_OverflowCounterWrapper is
 			timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
 			-----------------------------------------------
 
+			-------------- Calibrated Input ---------------
+			IsCalibrated		:	IN	STD_LOGIC;																	-- Is '1' if the s00_axis_timestamp is calibrated.
+			-----------------------------------------------
+
 			--------------- BeltBus Output ----------------
 		    beltbus_tvalid	   :	OUT	STD_LOGIC;															    	-- Valid Belt Bus
 			beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0)	    	-- Belt Bus
@@ -187,6 +195,10 @@ begin
 			--------------- Timestamp Input ---------------
 			timestamp_tvalid	=> s00_axis_timestamp_tvalid,
 			timestamp_tdata		=> s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0),
+			-----------------------------------------------
+
+			-------------- Calibrated Input ---------------
+			IsCalibrated				=>	IsCalibrated,
 			-----------------------------------------------
 
 			--------------- BeltBus Output ----------------

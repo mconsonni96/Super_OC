@@ -97,6 +97,10 @@ entity OverflowCounter is
 		timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0); 	    --! Timestamp FID + COARSE + RESOLUTION
 		-----------------------------------------------
 
+		-------------- Calibrated Input ---------------
+		IsCalibrated		:	IN	STD_LOGIC;																	--! Is '1' if the timestamp_tdata/tdata are calibrated.
+		-----------------------------------------------
+
 		--------------- BeltBus Output ----------------
 	    beltbus_tvalid	   :	OUT	STD_LOGIC;															    	--! Valid Belt Bus
 		beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 	    	--! Belt Bus
@@ -178,15 +182,18 @@ begin
 
 			elsif rising_edge (clk) then
 
-				beltbus_tvalid	<=	timestamp_tvalid;
+				beltbus_tvalid	<=	'0';
 
 				if timestamp_tvalid = '1' then
 
-					if fid = FID_MEASURE then
+					if fid = FID_MEASURE and IsCalibrated = '1' then
+						beltbus_tvalid	<=	'1';
 						beltbus_tdata	<=	timestamp_tdata;
 
 					elsif fid = FID_OVERFLOW then
 						CoarseOverflow_cnt	<=	CoarseOverflow_cnt +1;
+
+						beltbus_tvalid	<=	'1';
 						beltbus_tdata	<=	fid & std_logic_vector(CoarseOverflow_cnt +1);
 
 					end if;

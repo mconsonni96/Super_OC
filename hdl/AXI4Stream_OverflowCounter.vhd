@@ -107,6 +107,10 @@ entity AXI4Stream_OverflowCounter is
 		s00_axis_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);   	--! Timestamp FID + COARSE + RESOLUTION
 		-----------------------------------------------
 
+		-------------- Calibrated Input ---------------
+		IsCalibrated		:	IN	STD_LOGIC;																						--! Is '1' if the s00_axis_timestamp is calibrated.
+		-----------------------------------------------
+
 		--------------- BeltBus Output ----------------
 		m00_axis_beltbus_tvalid	   :	OUT	STD_LOGIC;																                --! Valid Belt Bus
 		m00_axis_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0) 		--! Belt Bus
@@ -157,6 +161,10 @@ architecture Behavioral of AXI4Stream_OverflowCounter is
 			s00_axis_timestamp_tdata	:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0);   					-- Timestamp FID + COARSE + RESOLUTION
 			-----------------------------------------------
 
+			-------------- Calibrated Input ---------------
+			IsCalibrated		:	IN	STD_LOGIC;																						-- Is '1' if the s00_axis_timestamp is calibrated.
+			-----------------------------------------------
+
 			--------------- BeltBus Output ----------------
 			m00_axis_beltbus_tvalid	   :	OUT	STD_LOGIC;																                -- Valid Belt Bus
 			m00_axis_beltbus_tdata	   :	OUT	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0) 						-- Belt Bus
@@ -203,7 +211,11 @@ begin
 
 			--------------- Timestamp Input ---------------
 			s00_axis_timestamp_tvalid	=> s00_axis_timestamp_tvalid,
-			s00_axis_timestamp_tdata		=> s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0),
+			s00_axis_timestamp_tdata	=> s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE + BIT_RESOLUTION-1 DOWNTO 0),
+			-----------------------------------------------
+
+			-------------- Calibrated Input ---------------
+			IsCalibrated				=>	IsCalibrated,
 			-----------------------------------------------
 
 			--------------- BeltBus Output ----------------
