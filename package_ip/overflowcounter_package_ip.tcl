@@ -12,7 +12,7 @@ set_property library $library [ipx::current_core]
 set name "AXI4Stream_OverflowCounter"
 set_property name $name [ipx::current_core]
 
-set version "1.3"
+set version "2.0"
 set_property version $version [ipx::current_core]
 
 set display_name "AXI4-Stream Overflow Counter"
