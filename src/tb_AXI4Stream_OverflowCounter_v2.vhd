@@ -69,10 +69,10 @@ library IEEE;
 
 
 
-ENTITY tb_AXI4Stream_OverflowCounter IS
-END tb_AXI4Stream_OverflowCounter;
+ENTITY tb_AXI4Stream_OverflowCounter_v2 IS
+END tb_AXI4Stream_OverflowCounter_v2;
 
-ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
+ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter_v2 IS
 
 	--------------------- CONSTANTS NON IN PACKAGE -----------------------------
 
