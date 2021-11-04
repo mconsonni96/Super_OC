@@ -142,7 +142,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>90674e6f</spirit:value>
+            <spirit:value>2efc2ee3</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -158,7 +158,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>f313b822</spirit:value>
+            <spirit:value>eba88962</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -363,7 +363,7 @@
         <spirit:name>src/tb_AXI4Stream_OverflowCounter.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
-        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
+        <spirit:userFileType>USED_IN_testbench</spirit:userFileType>
       </spirit:file>
       <spirit:file>
         <spirit:name>src/tb_AXI4Stream_OverflowCounter_behav.wcfg</spirit:name>
@@ -426,7 +426,7 @@
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:vendorDisplayName>DigiLAB</xilinx:vendorDisplayName>
       <xilinx:vendorURL>https://bitbucket.org/TimeEngineers/oveflowcounter/src/master/</xilinx:vendorURL>
-      <xilinx:coreRevision>1</xilinx:coreRevision>
+      <xilinx:coreRevision>2</xilinx:coreRevision>
       <xilinx:upgrades>
         <xilinx:canUpgradeFrom>xilinx.com:user:AXI4Stream_OverflowCounter:1.0</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>DigiLAB:TDC_Basic_IPs:AXI4Stream_OverflowCounter:1.0</xilinx:canUpgradeFrom>
@@ -437,7 +437,7 @@
         <xilinx:canUpgradeFrom>DigiLAB:user:AXI4Stream_OverflowCounter:1.2</xilinx:canUpgradeFrom>
         <xilinx:canUpgradeFrom>DigiLAB:ip:AXI4Stream_OverflowCounter:1.3</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2021-05-31T16:28:36Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2021-11-04T12:31:07Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="nopcore"/>
         <xilinx:tag xilinx:name="xilinx.com:user:AXI4Stream_OverflowCounter:1.0_ARCHIVE_LOCATION">d:/Xilinx_bis/Utility_Ip_Core/ip_repo/overflowcounter_ip</xilinx:tag>
@@ -526,12 +526,23 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@1b2554ae_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Repositories/2020.2/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4-Stream_OverflowCounter</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@28b3a34a_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Repositories/2020.2/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4-Stream_OverflowCounter</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@6b683876_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Repositories/2020.2/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4-Stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c1dc968_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b3544d3_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75413a83_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3b3269fb_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a48df3e_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@48df45b_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4215b0f2_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@79f24541_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@540867a2_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7795f87b_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21c258d_ARCHIVE_LOCATION">/home/nicola/Documents/Vivado/Projects/2020.2/TDC_Felix/ToT/TDC_Felix_ToT_v71.xpr/TDC_Felix_ToT_v71/TDC_Felix_ToT_v71.ipdefs/Utility_Ip_Core/ip_user_files/ip_repo/TDC_Basic/AXI4stream_OverflowCounter</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2020.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="bee5f104"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="f422932b"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="6d65570b"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="415a5d3c"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="0fdcc890"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="c4ce5e53"/>
