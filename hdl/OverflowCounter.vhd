@@ -130,9 +130,7 @@ architecture Behavioral of OverflowCounter is
 	----------------------------------------------
 
 	----------- FID of the BeltBus --------------
-	constant	FID_OVERFLOW_BIT0	:	STD_LOGIC	:=	'0';													--! 0 means overflow
-
-	constant	FID_MEASURE_BIT0	:	STD_LOGIC	:=  '1';					 								--! 1 means measure
+	constant	FID_OVERFLOW		:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=	(Others => '0');			--! 0 means overflow
 	---------------------------------------------
 	----------------------------------------------------------------------------
 
@@ -174,11 +172,11 @@ begin
 
 				if timestamp_tvalid = '1' then
 
-					if fid(0) = FID_MEASURE_BIT0 and IsCalibrated = '1' then
+					if fid /= FID_OVERFLOW and IsCalibrated = '1' then
 						beltbus_tvalid	<=	'1';
 						beltbus_tdata	<=	timestamp_tdata;
 
-					elsif fid(0) = FID_OVERFLOW_BIT0 then
+					elsif fid = FID_OVERFLOW then
 						CoarseOverflow_cnt	<=	CoarseOverflow_cnt +1;
 
 						beltbus_tvalid	<=	'1';
