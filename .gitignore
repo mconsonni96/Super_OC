@@ -1,0 +1,7 @@
+cocotb/*/__pycache__
+cocotb/*/sim_build
+cocotb/*/*.xml
+cocotb/*/*.ghw
+*merda*
+*mypy_cache*
+*.cf
