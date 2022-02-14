@@ -33,7 +33,7 @@ library IEEE;
 	--! Numeric library
 	use IEEE.NUMERIC_STD.ALL;
 --	--! Math operation over real number (not for implementation)
---	--use IEEE.MATH_REAL.all;
+    use IEEE.MATH_REAL.all;
 ------------------------------------
 
 -- ------------ STD LIBRARY -----------
@@ -68,7 +68,6 @@ library IEEE;
 
 
 
-
 ENTITY tb_AXI4Stream_OverflowCounter IS
 END tb_AXI4Stream_OverflowCounter;
 
@@ -85,9 +84,10 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 
 	------ Calibrated Timestamp Dimension ------
-	constant BIT_FID             : NATURAL                         := 1;                --! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
-	constant BIT_COARSE          : NATURAL     RANGE   0   TO  32  := 8;				--! Bit Dimension of the Coarse part of the Timestamp
-	constant BIT_RESOLUTION      : POSITIVE    RANGE   1   TO  32  := 16;				--! Bit Dimension of the Fine part of the Timestamp
+	constant BIT_FID             : NATURAL                          := 2;                --! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
+	constant BIT_COARSE_CEC      : NATURAL     RANGE   0   TO  32   := 2;				--! Bit Dimension of the Coarse part of the Timestamp
+	constant BIT_COARSE          : NATURAL     RANGE   0   TO  128  := 4;
+	constant BIT_RESOLUTION      : POSITIVE    RANGE   1   TO  32   := 1;				--! Bit Dimension of the Fine part of the Timestamp
 	---------------------------------------------
 
 	----------------------------------------------------------------------------
@@ -103,7 +103,8 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 			------------ Calibrated Timestamp Dimension  --------------
 		    BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
-		    BIT_COARSE			:	NATURAL		RANGE	0   TO	32	:=	8;					-- Bit of Coarse Counter, If 0 not Coarse counter is considered only Fine
+		    BIT_COARSE_CEC		:	NATURAL		RANGE	0   TO	32	:=	8;
+		    BIT_COARSE          :   NATURAL     RANGE   0   TO  128 :=  32;					--! Bit Dimension of the Coarse part of the Timestamp. If 0 not Coarse counter is considered only Fine
 	     	BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
 		    ----------------------------------------------
 	    );
@@ -122,7 +123,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 		    --------------- Timestamp Input ---------------
 			s00_axis_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
-			s00_axis_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
+			s00_axis_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE_CEC + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
 		    -----------------------------------------------
 
 			-------------- Calibrated Input ---------------
@@ -158,7 +159,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 	-------------------- Timestamp Input ------------------
 	signal	s00_axis_timestamp_tvalid	:  STD_LOGIC;																				 --! Valid Timestamp
-	signal	s00_axis_timestamp_tdata	:  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp FID + COARSE + RESOLUTION
+	signal	s00_axis_timestamp_tdata	:  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE_CEC + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp FID + COARSE + RESOLUTION
 	-------------------------------------------------------
 
 	-------------- Calibrated Input ---------------
@@ -188,6 +189,7 @@ BEGIN
 
 			-------- Calibrated Timestamp Dimension ------
 			BIT_FID	          =>  BIT_FID,
+			BIT_COARSE_CEC    =>  BIT_COARSE_CEC,
 			BIT_COARSE        =>  BIT_COARSE,
 			BIT_RESOLUTION    =>  BIT_RESOLUTION
 			----------------------------------------------
@@ -263,20 +265,20 @@ BEGIN
 		reset <= '0';
 		wait for RESET_WAIT;
 
-		for i in 0 to 4 loop
+		for i in 0 to 8 loop
 
 			IsCalibrated	<=	'0';
 
 			s00_axis_timestamp_tvalid	<= '1';
 			s00_axis_timestamp_tdata  										<= (Others => '0');
-			s00_axis_timestamp_tdata(BIT_COARSE+BIT_RESOLUTION-1 downto 0)	<= std_logic_vector(to_unsigned(i,BIT_COARSE+BIT_RESOLUTION));                 -- Simulation with FID = 0 (Overflow)
+			s00_axis_timestamp_tdata(BIT_COARSE_CEC + BIT_RESOLUTION-1 downto 0)	<= std_logic_vector(to_unsigned(i,BIT_COARSE_CEC + BIT_RESOLUTION));                 -- Simulation with FID = 0 (Overflow)
 			wait for CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid	<= '0';
 			wait for VALID_WAIT-CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid    <= '1';
-			s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE+BIT_RESOLUTION-1 downto BIT_COARSE+BIT_RESOLUTION)     <= std_logic_vector(to_unsigned(1,BIT_FID));    -- Simulation with FID = 1 (Measure)
+			s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE_CEC + BIT_RESOLUTION-1 downto BIT_COARSE_CEC + BIT_RESOLUTION)     <= std_logic_vector(to_unsigned(1,BIT_FID));    -- Simulation with FID = 1 (Measure)
 			wait for CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid    <= '0';
@@ -285,20 +287,20 @@ BEGIN
 		end loop;
 
 
-		for i in 5 to 9 loop
+		for i in 9 to 30 loop
 
 			IsCalibrated	<=	'1';
 
 			s00_axis_timestamp_tvalid	<= '1';
 			s00_axis_timestamp_tdata  										<= (Others => '0');
-			s00_axis_timestamp_tdata(BIT_COARSE+BIT_RESOLUTION-1 downto 0)	<= std_logic_vector(to_unsigned(i,BIT_COARSE+BIT_RESOLUTION));                 -- Simulation with FID = 0 (Overflow)
+			s00_axis_timestamp_tdata(BIT_COARSE_CEC + BIT_RESOLUTION-1 downto 0)	<= std_logic_vector(to_unsigned(i,BIT_COARSE_CEC + BIT_RESOLUTION));                 -- Simulation with FID = 0 (Overflow)
 			wait for CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid	<= '0';
 			wait for VALID_WAIT-CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid    <= '1';
-			s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE+BIT_RESOLUTION-1 downto BIT_COARSE+BIT_RESOLUTION)     <= std_logic_vector(to_unsigned(1,BIT_FID));    -- Simulation with FID = 1 (Measure)
+			s00_axis_timestamp_tdata(BIT_FID + BIT_COARSE_CEC + BIT_RESOLUTION-1 downto BIT_COARSE_CEC + BIT_RESOLUTION)     <= std_logic_vector(to_unsigned(1,BIT_FID));    -- Simulation with FID = 1 (Measure)
 			wait for CLK_PERIOD;
 
 			s00_axis_timestamp_tvalid    <= '0';
