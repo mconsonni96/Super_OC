@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="39770000fs"></ZoomStartTime>
-      <ZoomEndTime time="67150001fs"></ZoomEndTime>
-      <Cursor1Time time="39970000fs"></Cursor1Time>
+      <ZoomStartTime time="560050fs"></ZoomStartTime>
+      <ZoomEndTime time="674751fs"></ZoomEndTime>
+      <Cursor1Time time="1000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="199"></NameColumnWidth>
-      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+      <NameColumnWidth column_width="275"></NameColumnWidth>
+      <ValueColumnWidth column_width="145"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="14" />
+   <WVObjectSize size="27" />
    <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/reset">
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
@@ -27,25 +27,124 @@
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/s00_timestamp_tvalid">
-      <obj_property name="ElementShortName">s00_timestamp_tvalid</obj_property>
-      <obj_property name="ObjectShortName">s00_timestamp_tvalid</obj_property>
+   <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/IsCalibrated">
+      <obj_property name="ElementShortName">IsCalibrated</obj_property>
+      <obj_property name="ObjectShortName">IsCalibrated</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_AXI4Stream_OverflowCounter/s00_timestamp_tdata">
-      <obj_property name="ElementShortName">s00_timestamp_tdata[25:0]</obj_property>
-      <obj_property name="ObjectShortName">s00_timestamp_tdata[25:0]</obj_property>
+   <wvobject fp_name="divider15" type="divider">
+      <obj_property name="label">coarse_in</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_AXI4Stream_OverflowCounter/dut_AXI4Stream_OverflowCounter/CoarseOverflow_cnt">
-      <obj_property name="ElementShortName">CoarseOverflow_cnt[23:0]</obj_property>
-      <obj_property name="ObjectShortName">CoarseOverflow_cnt[23:0]</obj_property>
+   <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/s00_axis_timestamp_tvalid">
+      <obj_property name="ElementShortName">s00_axis_timestamp_tvalid</obj_property>
+      <obj_property name="ObjectShortName">s00_axis_timestamp_tvalid</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_beltbus_tvalid">
-      <obj_property name="ElementShortName">m00_beltbus_tvalid</obj_property>
-      <obj_property name="ObjectShortName">m00_beltbus_tvalid</obj_property>
+   <wvobject type="vbus" fp_name="vbus30">
+      <obj_property name="label">fid_in</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/s00_axis_timestamp_tdata[4]">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">[4]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/s00_axis_timestamp_tdata[3]">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">[3]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_AXI4Stream_OverflowCounter/m00_beltbus_tdata">
-      <obj_property name="ElementShortName">m00_beltbus_tdata[25:0]</obj_property>
-      <obj_property name="ObjectShortName">m00_beltbus_tdata[25:0]</obj_property>
+   <wvobject type="vbus" fp_name="vbus27">
+      <obj_property name="label">coarse_in</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/s00_axis_timestamp_tdata[2]">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">[2]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/s00_axis_timestamp_tdata[1]">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">[1]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="divider16" type="divider">
+      <obj_property name="label">coarse_out</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tvalid">
+      <obj_property name="ElementShortName">m00_axis_beltbus_tvalid</obj_property>
+      <obj_property name="ObjectShortName">m00_axis_beltbus_tvalid</obj_property>
+   </wvobject>
+   <wvobject type="vbus" fp_name="vbus46">
+      <obj_property name="label">fid_out</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tdata[5]">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">[5]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tdata[6]">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">[6]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="vbus" fp_name="vbus41">
+      <obj_property name="label">coarse_out</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tdata[1]">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">[1]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tdata[2]">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">[2]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tdata[3]">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">[3]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tdata[4]">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">[4]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="divider49" type="divider">
+      <obj_property name="label">aux counter</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_AXI4Stream_OverflowCounter/dut_AXI4Stream_OverflowCounter/Inst_AXI4Stream_OverflowCounterWrapper/Inst_OverflowCounter/AuxiliaryCounter">
+      <obj_property name="ElementShortName">AuxiliaryCounter[1:0]</obj_property>
+      <obj_property name="ObjectShortName">AuxiliaryCounter[1:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider50" type="divider">
+      <obj_property name="label">data_in</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/s00_axis_timestamp_tvalid">
+      <obj_property name="ElementShortName">s00_axis_timestamp_tvalid</obj_property>
+      <obj_property name="ObjectShortName">s00_axis_timestamp_tvalid</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_AXI4Stream_OverflowCounter/s00_axis_timestamp_tdata">
+      <obj_property name="ElementShortName">s00_axis_timestamp_tdata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">s00_axis_timestamp_tdata[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider51" type="divider">
+      <obj_property name="label">data_out</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tvalid">
+      <obj_property name="ElementShortName">m00_axis_beltbus_tvalid</obj_property>
+      <obj_property name="ObjectShortName">m00_axis_beltbus_tvalid</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_AXI4Stream_OverflowCounter/m00_axis_beltbus_tdata">
+      <obj_property name="ElementShortName">m00_axis_beltbus_tdata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">m00_axis_beltbus_tdata[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider17" type="divider">
+      <obj_property name="label">Constants</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
    </wvobject>
    <wvobject type="other" fp_name="/tb_AXI4Stream_OverflowCounter/CLK_PERIOD">
       <obj_property name="ElementShortName">CLK_PERIOD</obj_property>
@@ -63,6 +162,10 @@
       <obj_property name="ElementShortName">BIT_FID</obj_property>
       <obj_property name="ObjectShortName">BIT_FID</obj_property>
    </wvobject>
+   <wvobject type="other" fp_name="/tb_AXI4Stream_OverflowCounter/BIT_COARSE_CEC">
+      <obj_property name="ElementShortName">BIT_COARSE_CEC</obj_property>
+      <obj_property name="ObjectShortName">BIT_COARSE_CEC</obj_property>
+   </wvobject>
    <wvobject type="other" fp_name="/tb_AXI4Stream_OverflowCounter/BIT_COARSE">
       <obj_property name="ElementShortName">BIT_COARSE</obj_property>
       <obj_property name="ObjectShortName">BIT_COARSE</obj_property>
@@ -70,9 +173,5 @@
    <wvobject type="other" fp_name="/tb_AXI4Stream_OverflowCounter/BIT_RESOLUTION">
       <obj_property name="ElementShortName">BIT_RESOLUTION</obj_property>
       <obj_property name="ObjectShortName">BIT_RESOLUTION</obj_property>
-   </wvobject>
-   <wvobject type="other" fp_name="/tb_AXI4Stream_OverflowCounter/dut_AXI4Stream_OverflowCounter/BIT_OVERFLOW_CNT">
-      <obj_property name="ElementShortName">BIT_OVERFLOW_CNT</obj_property>
-      <obj_property name="ObjectShortName">BIT_OVERFLOW_CNT</obj_property>
    </wvobject>
 </wave_config>
