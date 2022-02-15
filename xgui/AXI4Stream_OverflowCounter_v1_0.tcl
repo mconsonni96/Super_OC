@@ -4,8 +4,8 @@ proc init_gui { IPINST } {
   #Adding Page
   set Page_0 [ipgui::add_page $IPINST -name "Page 0"]
   ipgui::add_param $IPINST -name "BIT_FID" -parent ${Page_0}
-  ipgui::add_param $IPINST -name "BIT_COARSE" -parent ${Page_0}
   ipgui::add_param $IPINST -name "BIT_COARSE_CEC" -parent ${Page_0}
+  ipgui::add_param $IPINST -name "BIT_COARSE" -parent ${Page_0}
   ipgui::add_param $IPINST -name "BIT_RESOLUTION" -parent ${Page_0}
 
 
