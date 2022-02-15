@@ -1,6 +1,6 @@
 
 # =========================== SET PATH =========================================
-set path "D:/Xilinx_bis/Utility_Ip_Core/ip_repo/axi4stream_overflowcounter/package_ip"
+set path "/home/mconsonni/Utility_Ip_Core/ip-repo/axi-4-stream-super-overflow-counter/package_ip"
 
 # ============================ Identification ==================================
 set vendor "DigiLAB"
@@ -12,7 +12,7 @@ set_property library $library [ipx::current_core]
 set name "AXI4Stream_OverflowCounter"
 set_property name $name [ipx::current_core]
 
-set version "2.0"
+set version "2.1"
 set_property version $version [ipx::current_core]
 
 set display_name "AXI4-Stream Overflow Counter"
@@ -42,6 +42,7 @@ set param_path $path
 append param_path "/ip_customization_parameters/"
 source [join [list $param_path "set_param_fx.tcl"] ""] -notrace
 
+source [join [list $param_path "set_bit_coarse_cec.tcl"] ""] -notrace
 source [join [list $param_path "set_bit_coarse.tcl"] ""] -notrace
 source [join [list $param_path "set_bit_fid.tcl"] ""] -notrace
 source [join [list $param_path "set_bit_resolution.tcl"] ""] -notrace

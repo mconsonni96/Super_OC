@@ -14,6 +14,22 @@ proc update_MODELPARAM_VALUE.BIT_COARSE { MODELPARAM_VALUE.BIT_COARSE PARAM_VALU
 }
 #===============================================================================
 
+#==================================== BIT_COARSE_CEC ==================================
+proc update_PARAM_VALUE.BIT_COARSE_CEC { PARAM_VALUE.BIT_COARSE_CEC } {
+	# Procedure called to update BIT_COARSE_CEC when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.BIT_COARSE_CEC { PARAM_VALUE.BIT_COARSE_CEC } {
+	# Procedure called to validate BIT_COARSE_CEC
+	return true
+}
+
+proc update_MODELPARAM_VALUE.BIT_COARSE_CEC { MODELPARAM_VALUE.BIT_COARSE_CEC PARAM_VALUE.BIT_COARSE_CEC } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.BIT_COARSE_CEC}] ${MODELPARAM_VALUE.BIT_COARSE_CEC}
+}
+#===============================================================================
+
 #==================================== BIT_FID ==================================
 proc update_PARAM_VALUE.BIT_FID { PARAM_VALUE.BIT_FID } {
 	# Procedure called to update BIT_FID when any of the dependent parameters in the arguments change
