@@ -84,9 +84,9 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 
 	------ Calibrated Timestamp Dimension ------
-	constant BIT_FID             : NATURAL                          := 2;               --! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
-	constant BIT_COARSE_CEC      : NATURAL     RANGE   0   TO  32   := 2;				--! Bit Dimension of the input data Coarse Part of the Timestamp. It corresponds to the one in the CoarseExtensionCore.
-	constant BIT_COARSE          : NATURAL     RANGE   0   TO  128  := 4;               --! Bit Dimension of the output data Coarse Part of the Timestamp. It corresponds to the Coarse part length in all the following modules.
+	constant BIT_FID             : NATURAL                          := 2;                --! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream.
+	constant BIT_COARSE_CEC      : NATURAL     RANGE   0   TO  32   := 2;				--! Bit Dimension of the Coarse part of the Timestamp
+	constant BIT_COARSE          : NATURAL     RANGE   0   TO  128  := 4;
 	constant BIT_RESOLUTION      : POSITIVE    RANGE   1   TO  32   := 1;				--! Bit Dimension of the Fine part of the Timestamp
 	---------------------------------------------
 
@@ -102,10 +102,10 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 		generic (
 
 			------------ Calibrated Timestamp Dimension  --------------
-		    BIT_FID				:	NATURAL							:=	1;			        --! Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
-		    BIT_COARSE_CEC		:	NATURAL		RANGE	0   TO	32	:=	8;                  --! Bit Dimension of the input data Coarse Part of the Timestamp. It corresponds to the one in the CoarseExtensionCore.
-		    BIT_COARSE          :   NATURAL     RANGE   0   TO  128 :=  32;					--! Bit Dimension of the output data Coarse Part of the Timestamp. It corresponds to the Coarse part length in all the following modules.
-	     	BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					--! Number of Bits of the Calibrated_TDL
+		    BIT_FID				:	NATURAL							:=	1;			        -- Function ID of the Belt Bus 0 = OVERFLOW Coarse, 1 = MEASURE, If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
+		    BIT_COARSE_CEC		:	NATURAL		RANGE	0   TO	32	:=	8;
+		    BIT_COARSE          :   NATURAL     RANGE   0   TO  128 :=  32;					--! Bit Dimension of the Coarse part of the Timestamp. If 0 not Coarse counter is considered only Fine
+	     	BIT_RESOLUTION      :	POSITIVE	RANGE	1	TO	32	:=	16					-- Number of Bits of the Calibrated_TDL
 		    ----------------------------------------------
 	    );
 
@@ -123,7 +123,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 		    --------------- Timestamp Input ---------------
 			s00_axis_timestamp_tvalid	:	IN	STD_LOGIC;																                -- Valid Timestamp
-			s00_axis_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE_CEC + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE_CEC + RESOLUTION
+			s00_axis_timestamp_tdata		:	IN	STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE_CEC + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0); 	    -- Timestamp dFID + COARSE + RESOLUTION
 		    -----------------------------------------------
 
 			-------------- Calibrated Input ---------------
@@ -159,7 +159,7 @@ ARCHITECTURE Behavioral OF tb_AXI4Stream_OverflowCounter IS
 
 	-------------------- Timestamp Input ------------------
 	signal	s00_axis_timestamp_tvalid	:  STD_LOGIC;																				 --! Valid Timestamp
-	signal	s00_axis_timestamp_tdata	:  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE_CEC + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp FID + COARSE_CEC + RESOLUTION
+	signal	s00_axis_timestamp_tdata	:  STD_LOGIC_VECTOR((((BIT_FID + BIT_COARSE_CEC + BIT_RESOLUTION-1)/8+1)*8)-1 DOWNTO 0);		 --! Timestamp FID + COARSE + RESOLUTION
 	-------------------------------------------------------
 
 	-------------- Calibrated Input ---------------

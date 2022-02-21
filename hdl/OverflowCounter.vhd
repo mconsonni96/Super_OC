@@ -75,8 +75,8 @@ entity OverflowCounter is
 
 		---------- Calibrated Timestamp Dimension ----
 	    BIT_FID				    :	NATURAL							:=	0;			        --! Bit Dimension of the Fid part of the Timestamp. If BIT_FID = 0 the belt bus is removed and it is a standard axi4 stream
-		BIT_COARSE_IN			:	NATURAL		RANGE	0   TO	32	:=	8;                  --! Bit Dimension of the input data Coarse Part of the Timestamp. It corresponds to the one in the CoarseExtensionCore.
-		BIT_COARSE_OUT          :   NATURAL     RANGE   0   TO  128 :=  32;					--! Bit Dimension of the output data Coarse Part of the Timestamp. It corresponds to the Coarse part length in all the following modules.
+		BIT_COARSE_IN			:	NATURAL		RANGE	0   TO	32	:=	8;
+		BIT_COARSE_OUT          :   NATURAL     RANGE   0   TO  128 :=  32;					--! Bit Dimension of the Coarse part of the Timestamp. If 0 not Coarse counter is considered only Fine
 		BIT_RESOLUTION          :	POSITIVE	RANGE	1	TO	32	:=	16					--! Bit Dimension of the Fine part of the Timestamp, number of Bits of the Calibrated_TDL
 		----------------------------------------------
 	);
@@ -95,7 +95,7 @@ entity OverflowCounter is
 
 		--------------- Timestamp Input ---------------
 		timestamp_tvalid	:	IN	STD_LOGIC;															    	--! Valid Timestamp
-		timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE_IN + BIT_RESOLUTION-1 DOWNTO 0); 	    --! Timestamp FID + COARSE_IN + RESOLUTION
+		timestamp_tdata		:	IN	STD_LOGIC_VECTOR(BIT_FID + BIT_COARSE_IN + BIT_RESOLUTION-1 DOWNTO 0); 	    --! Timestamp FID + COARSE + RESOLUTION
 		-----------------------------------------------
 
 		-------------- Calibrated Input ---------------
@@ -115,12 +115,11 @@ end OverflowCounter;
 --! \brief If *BIT_FID = 0* the Belt Bus is removed and the output is a standard Axi4 Stream.
 --! In this case the module is trasparent and the input is transferred unchanged to the output (*beltbus_tvalid <= timestamp_tvalid*, *beltbus_tdata <= timestamp_tdata*).
 --! \details Moreover the Counter of Overflow(*CoarseOverflow_cnt*) is not enabled.
---! If *BIT_FID /= 0* and *timestamp_tvalid = '1'*, the output has the following structure:
---! if you have a measure (*fid_in = '1'*), the Fine part remains unchanged, the BIT_COARSE_IN bits of the Coarse part remains equal to the input ones,
---! while the BIT_COARSE_OUT - BIT_COARSE_IN bits of the Coarse part are equal to an AuxiliaryCounter, which counts the number of input data which are overflows (*fid_in = 0*).
---! When AuxiliaryCounter arrives at all '1's and another data with *fid_in = 0* arrives, it restarts from zero and i have as output data the *CoarseOverflow_cnt*, which is increased by one; so, the output contains the *fid_overflow* (00) & *CoarseOverflow_cnt*.
+--! If *BIT_FID /= 0* and *timestamp_tvalid = '1'*, the output corresponds exactly
+--! to the input (*beltbus_tdata <= timestamp_tdata*) if you have a measure (*fid = '1'*),
+--! otherwise if you have an Overflow (*fid = 0*) the *CoarseOverflow_cnt* is increased by one and the output contains the *fid* & *CoarseOverflow_cnt*.
 --! In the following figure we can see the concept just explained
---! \image html wave_super.png
+--! \image html InputOutput.svg
 --------------------------------------------------------------------------------
 
 architecture Behavioral of OverflowCounter is
@@ -128,19 +127,19 @@ architecture Behavioral of OverflowCounter is
 	------------------------- CONSTANTS DECLARATION ----------------------------
 
 	----- Coarse Counter OverFlow Dimension -----
-	constant	BIT_OVERFLOW_CNT	:	POSITIVE	:=	BIT_COARSE_OUT + BIT_RESOLUTION;							--! Output Coarse Counter OverFlow Dimension
+	constant	BIT_OVERFLOW_CNT	:	POSITIVE	:=	BIT_COARSE_OUT + BIT_RESOLUTION;							--! Coarse Counter OverFlow Dimension
 	----------------------------------------------
-    constant    BIT_COARSE_DIFFERENCE : NATURAL     :=  BIT_COARSE_OUT - BIT_COARSE_IN;                             --! Difference of the Coarse part Length in output minus the one in input
+    constant    BIT_COARSE_DIFFERENCE_UP : NATURAL     :=  BIT_COARSE_OUT - BIT_COARSE_IN;
+    
+    constant    BIT_COARSE_DIFFERENCE_DN : NATURAL     :=  BIT_COARSE_IN - BIT_COARSE_OUT;
 
-	constant    MAX_AUX_COUNT       :   INTEGER    := 2**(BIT_COARSE_DIFFERENCE);                                   --! Maximum value of the AuxiliaryCounter part. It restarts from zero.
+	constant    MAX_AUX_COUNT       :   INTEGER    := 2**(BIT_COARSE_DIFFERENCE_UP);
 
 	----------- FID of the BeltBus --------------
-	constant	FID_OVERFLOW		:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=	(Others => '0');			    --! 0 means overflow
+	constant	FID_OVERFLOW		:	STD_LOGIC_VECTOR(BIT_FID-1 downto 0)	:=	(Others => '0');			--! 0 means overflow
 	---------------------------------------------
 	----------------------------------------------------------------------------
-    constant    ZERO_PADDING        :   STD_LOGIC_VECTOR(BIT_COARSE_DIFFERENCE -1 downto 0) := (Others => '0');     --! vector for zero padding in coarse part of the output data (measure) in the case BIT_FID = 0
-
-	----------------------------- ALIAS DECLARATIONS ---------------------------
+    ----------------------------- ALIAS DECLARATIONS ---------------------------
 	----------- FID of the BeltBus --------------
 	alias fid_in	:	STD_LOGIC_VECTOR(BIT_FID-1 DOWNTO 0) is timestamp_tdata(BIT_FID + BIT_COARSE_IN + BIT_RESOLUTION-1 DOWNTO BIT_COARSE_IN + BIT_RESOLUTION);			--! FID of the BeltBus
      ----------------------------------------------
@@ -150,8 +149,9 @@ architecture Behavioral of OverflowCounter is
 
 	-------------------------- SIGNALS DECLARATION -----------------------------
 	---------- Coarse Counter OverFlow  ----------
-	signal  CoarseOverflow_cnt_out  :   UNSIGNED(BIT_OVERFLOW_CNT-1 downto 0);                                --! Overflow Counter
-	signal  AuxiliaryCounter        :   UNSIGNED(BIT_COARSE_DIFFERENCE -1 downto 0)  := (Others => '0');	  --! AuxiliaryCounter needed to count the number of input data with *fid_in = 0*
+	signal  CoarseOverflow_cnt_out  :   UNSIGNED(BIT_OVERFLOW_CNT-1 downto 0);
+	signal  AuxiliaryCounter        :   UNSIGNED(BIT_COARSE_DIFFERENCE_UP -1 downto 0)  := (Others => '0');										--! Overflow Counter
+    signal  CoarseVector            :   UNSIGNED(BIT_COARSE_OUT -1 downto 0)         := (Others => '0');
     ----------------------------------------------
 	----------------------------------------------------------------------------
 
@@ -165,60 +165,73 @@ begin
 	OverflowCNT : process (clk, reset)
 
 	begin
+	
+	   -- reset
+        if (reset = '1') then
+            beltbus_tvalid	<=	'0';
+            CoarseOverflow_cnt_out	<=	(Others => '0');
+            AuxiliaryCounter        <=  (Others => '0');
+       
+       -- working 
+	   else
 
-		-- BeltBus with Overflow Counter
-		if BIT_FID /= 0 then
-
-			if (reset = '1') then
-				beltbus_tvalid	<=	'0';
-				CoarseOverflow_cnt_out	<=	(Others => '0');
-				AuxiliaryCounter        <=  (Others => '0');
-
-			elsif rising_edge (clk) then
-
-				beltbus_tvalid	<=	'0';
-
-				if timestamp_tvalid = '1' then
-					if fid_in /= FID_OVERFLOW then
-
-						if IsCalibrated = '1' then
-						   beltbus_tvalid	<=	'1';
-						   beltbus_tdata	<=	fid_in & std_logic_vector(AuxiliaryCounter) & timestamp_tdata(BIT_RESOLUTION + BIT_COARSE_IN -1 downto 0);
-					    end if;
-
-					elsif fid_in = FID_OVERFLOW then
-
-						if BIT_COARSE_DIFFERENCE /= 0 then
-						   AuxiliaryCounter   <= AuxiliaryCounter + 1;
-
-						   if AuxiliaryCounter = MAX_AUX_COUNT-1 then
-							  AuxiliaryCounter <= (Others => '0');
- 		   					  beltbus_tvalid <= '1';
- 		   					  CoarseOverflow_cnt_out <= CoarseOverflow_cnt_out + 1;
- 		   					  beltbus_tdata	<=	FID_OVERFLOW & std_logic_vector(CoarseOverflow_cnt_out +1);
-						   end if;
-
-					    elsif BIT_COARSE_DIFFERENCE = 0 then
-						      beltbus_tvalid <= '1';
-						      CoarseOverflow_cnt_out <= CoarseOverflow_cnt_out + 1;
-						      beltbus_tdata	<=	FID_OVERFLOW & std_logic_vector(CoarseOverflow_cnt_out +1);
+            -- BeltBus with Overflow Counter
+            if BIT_FID /= 0 then
+            
+                if rising_edge (clk) then
+            
+                    beltbus_tvalid	<=	'0';
+            
+                    if timestamp_tvalid = '1' then
+                        if fid_in /= FID_OVERFLOW then
+            
+                            if IsCalibrated = '1' then
+                               beltbus_tvalid	<=	'1';
+                               
+                                if BIT_COARSE_DIFFERENCE_UP > 0 then
+                                    beltbus_tdata	<=	fid_in & std_logic_vector(AuxiliaryCounter) & timestamp_tdata(BIT_RESOLUTION + BIT_COARSE_IN -1 downto 0);
+                                elsif BIT_COARSE_DIFFERENCE_UP = 0 or BIT_COARSE_DIFFERENCE_DN > 0 then
+                                    beltbus_tdata	<=	fid_in & timestamp_tdata(BIT_RESOLUTION + BIT_COARSE_OUT -1 downto 0);
+                                end if;
+                            
+                               
+                            end if;
+            
+                        elsif fid_in = FID_OVERFLOW then
+            
+                            if BIT_COARSE_DIFFERENCE_UP > 0 then
+                               AuxiliaryCounter   <= AuxiliaryCounter + 1;
+            
+                               if AuxiliaryCounter = MAX_AUX_COUNT-1 then
+                                  AuxiliaryCounter <= (Others => '0');
+                                  beltbus_tvalid <= '1';
+                                  CoarseOverflow_cnt_out <= CoarseOverflow_cnt_out + 1;
+                                  beltbus_tdata	<=	FID_OVERFLOW & std_logic_vector(CoarseOverflow_cnt_out +1);
+                               end if;
+            
+                            elsif BIT_COARSE_DIFFERENCE_UP = 0 or BIT_COARSE_DIFFERENCE_DN > 0 then
+                                  beltbus_tvalid <= '1';
+                                  CoarseOverflow_cnt_out <= CoarseOverflow_cnt_out + 1;
+                                  beltbus_tdata	<=	FID_OVERFLOW & std_logic_vector(CoarseOverflow_cnt_out +1); 
+                            end if;
+            
                         end if;
-
-					end if;
-
-				end if;
-
-			 end if;
-		-----------------------------------
-
-		-- No BeltBus No Overflow Counter --
-		else
-
-			beltbus_tvalid	<=	timestamp_tvalid;
-			beltbus_tdata	<=	ZERO_PADDING & timestamp_tdata(BIT_RESOLUTION + BIT_COARSE_IN -1 downto 0);
-
+            
+                    end if;
+            
+                 end if;
+            -----------------------------------
+    
+            -- No BeltBus No Overflow Counter --
+            else
+    
+                beltbus_tdata   <=  (Others => '0');
+                beltbus_tdata(BIT_RESOLUTION + BIT_COARSE_IN -1 downto 0)   <=  timestamp_tdata;
+    
+            end if;
+            -----------------------------------
+		
 		end if;
-		-----------------------------------
 
 
 	end process;
