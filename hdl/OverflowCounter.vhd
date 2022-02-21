@@ -129,9 +129,9 @@ architecture Behavioral of OverflowCounter is
 	----- Coarse Counter OverFlow Dimension -----
 	constant	BIT_OVERFLOW_CNT	:	POSITIVE	:=	BIT_COARSE_OUT + BIT_RESOLUTION;							--! Coarse Counter OverFlow Dimension
 	----------------------------------------------
-    constant    BIT_COARSE_DIFFERENCE_UP : NATURAL     :=  BIT_COARSE_OUT - BIT_COARSE_IN;
+    constant    BIT_COARSE_DIFFERENCE_UP : INTEGER     :=  BIT_COARSE_OUT - BIT_COARSE_IN;
     
-    constant    BIT_COARSE_DIFFERENCE_DN : NATURAL     :=  BIT_COARSE_IN - BIT_COARSE_OUT;
+    constant    BIT_COARSE_DIFFERENCE_DN : INTEGER     :=  BIT_COARSE_IN - BIT_COARSE_OUT;
 
 	constant    MAX_AUX_COUNT       :   INTEGER    := 2**(BIT_COARSE_DIFFERENCE_UP);
 
